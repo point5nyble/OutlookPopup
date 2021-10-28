@@ -1,0 +1,60 @@
+﻿<Window x:Class="OutlookPopup.WarningMessage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Activated="Window_Activated"
+             Title="{Binding ExternalRecpMessageTitle}" 
+            FontSize="14" Width="550" Height="250"
+             d:DesignHeight="250" d:DesignWidth="500" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" ShowActivated="True" ResizeMode="NoResize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <BitmapImage x:Key="Stop" UriSource="Resources/Stop.jpg"/>
+            
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="0,0,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            
+        </Grid.RowDefinitions>
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image  x:Name="stopAlert" Source="Resources\Stop.jpg" Height="100"
+                   Width="100"
+                   Margin="15"/>
+            <TextBlock  Grid.Column="1" FontWeight="Bold" FontSize="16"
+                       Margin="-5,10,20,10" 
+                       TextWrapping="Wrap"                      
+                       >
+                <Run Text="This email will be sent to an external party."/>
+                <LineBreak/>
+                
+                <Run  Text="Please validate the intended recipient(s) ensure this email comply with the Group Data Governance Policy."/>
+                
+                <LineBreak/>
+                <Run Text="Do you want to proceed?"/>
+                
+            </TextBlock>
+        </Grid>
+        
+        <Grid Grid.Row="1" Margin="10" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.Column="1">
+                <Button Content="{Binding SendBtnText }" Height="25" Width="80" Click="Button_Click"/>
+                <Button x:Name="DontSend" Content="{Binding DSendBtnText}" Focusable="True" 
+                        Margin="60,0,0,0" Height="25" Width="80" Click="DontSend_Click"/>
+            </StackPanel>
+
+             
+        </Grid>
+    </Grid>
+</Window>

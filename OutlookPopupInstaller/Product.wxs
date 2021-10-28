@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="OutlookPopup" Language="1033"
+           Version="1.0.2.0" Manufacturer="CTC" UpgradeCode="D37CB28A-9EF9-4A23-B1CC-7DD29D53EE13">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed."
+                  Schedule="afterInstallInitialize"
+                  AllowSameVersionUpgrades="yes"  />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Feature Id="ProductFeature" Title="OutlookPopup" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="RegistryComponents"/>
+      <ComponentGroupRef Id="LogFiles"/>
+    </Feature>
+
+  </Product>
+  <Fragment>
+
+    <Property Id="ARPPRODUCTICON"
+     Value="myIcon" />
+    <Property Id="ARPCOMMENTS"
+     Value="(c) Point5Nyble" />
+    <Property Id="ARPNOREPAIR"
+     Value="1" />
+    <Property Id="ARPCONTACT"
+     Value="abhinovpankaj1@gmail.com" />
+    <Property Id="ARPHELPLINK" Value="http://www.point5nyble.com/"/>
+
+  </Fragment>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+
+      <Directory Id="CommonAppDataFolder">
+        <Directory Id="LOGSFOLDER" Name="Point5Nyble">
+          <Directory Id="LOGS" Name="OutlookPopup"/>
+        </Directory>
+      </Directory>
+
+      <?if $(sys.BUILDARCH)=x64?>
+      <Directory Id="ProgramFiles64Folder">
+        <Directory Id="INSTALLFOLDER" Name="Point5Nyble" >
+          <Directory Id="PRODUCTNAME" Name="OutlookPopup"/>
+        </Directory>
+      </Directory>
+      <?else?>
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="Point5Nyble" >
+          <Directory Id="PRODUCTNAME" Name="OutlookPopup"/>
+        </Directory>
+      </Directory>
+      <?endif?>
+    </Directory>
+
+
+
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="RegistryComponents"
+       Directory="PRODUCTNAME">
+      <Component Id="CMP_RegDesc"
+      Guid="C08CB4ED-2CC7-4256-ACC9-E9EFD6DDF142">
+        <RegistryValue Id="Description"
+        KeyPath="yes"
+        Action="write"
+        Root="HKCU"
+        Key="Software\Microsoft\Office\Outlook\Addins\OutlookPopup"
+        Name="Description"
+        Value="AddIn to Warn in case Users try to send mail or attachments to external domains."
+        Type="string" />
+      </Component>
+
+      <Component Id="CMP_RegFrName"
+         Guid="05BB003F-76DC-4817-8CAB-34137F933EF8">
+        <RegistryValue Id="FriendlyName"
+        KeyPath="yes"
+        Action="write"
+        Root="HKCU"
+        Key="Software\Microsoft\Office\Outlook\Addins\OutlookPopup"
+        Name="FriendlyName"
+        Value="OutlookPopup AddIn"
+        Type="string" />
+      </Component>
+
+      <Component Id="CMP_RegLoadBehaviour"
+        Guid="0B65C245-09F6-442D-B4FC-0DDFA31FE9E1">
+        <RegistryValue Id="LoadBehavior"
+        KeyPath="yes"
+        Action="write"
+        Root="HKCU"
+        Key="Software\Microsoft\Office\Outlook\Addins\OutlookPopup"
+        Name="LoadBehavior"
+        Value="3"
+        Type="integer" />
+      </Component>
+
+      <Component Id="CMP_RegManifest"
+         Guid="D23ABCB8-8E1F-4243-AA85-F6C46450DEC7">
+        <RegistryKey Root="HKCU" Key="Software\Microsoft\Office\Outlook\Addins\OutlookPopup">
+          <RegistryValue Id="ManifestPath"
+            KeyPath="yes"
+            Name="Manifest"
+            Action="write"
+            Value="file:///[PRODUCTNAME]OutlookPopup.vsto|vstolocal"
+            Type="string"/>
+        </RegistryKey>
+      </Component>
+
+      <Component Id="CMP_AttachmentPromptSettings"
+       Guid="53B1C955-5D26-44A1-8F8D-5345AC0E364A" Permanent="yes">
+        <RegistryKey Root="HKLM" Key="Software\CTC\Outlook_ExternalPrompt">
+          <RegistryValue Id="AttachSettings"
+                         KeyPath="yes"
+                         Name="AttachmentPromptEnabled"
+                         Action="write"
+                         Value="1"
+                         Type="string"/>
+        </RegistryKey>
+      </Component>
+
+      <Component Id="CMP_ExternalRecpPromptSettings"
+       Guid="94D337B5-EF09-430D-9E49-80CE46088BD0" Permanent="yes">
+        <RegistryKey Root="HKLM" Key="Software\CTC\Outlook_ExternalPrompt">
+          <RegistryValue Id="ExternalRecp"
+                         KeyPath="yes"
+                         Name="ExternalRecpPromptEnabled"
+                         Action="write"
+                         Value="1"
+                         Type="string"/>
+        </RegistryKey>
+      </Component>
+
+      <Component Id="CMP_AttachmentMsgBody"
+       Guid="1D789BA2-BAF0-4915-8483-61B7C06E03C2" Permanent="yes">
+        <RegistryKey Root="HKLM" Key="Software\CTC\Outlook_ExternalPrompt">
+          <RegistryValue Id="AttachBody"
+                         KeyPath="yes"
+                         Name="AttachmentMessageBody"
+                         Action="write"
+                         Value="This email will be sent to an external party.\nPlease validate the intended recipient(s) ensure this email comply with the Group Data
+Governance Policy.\nDo you want to proceed?"
+                         Type="string"/>
+        </RegistryKey>
+      </Component>
+      <Component Id="CMP_ExternalRecpMsgBody"
+       Guid="10EC2297-44A0-48D9-913D-9F516ED9E2F3" Permanent="yes">
+        <RegistryKey Root="HKLM" Key="Software\CTC\Outlook_ExternalPrompt">
+          <RegistryValue Id="ExternalPropmtBody"
+                         KeyPath="yes"
+                         Name="ExternalRecpMessageBody"
+                         Action="write"
+                         Value="This email will be sent to an external party.\nPlease validate the intended recipient(s) ensure this email comply with the Group Data
+Governance Policy.\nDo you want to proceed?"
+                         Type="string"/>
+        </RegistryKey>
+      </Component>
+      <Component Id="CMP_AttachmentMsgTitle"
+       Guid="92305385-FF57-45B5-8949-F5B1BE34E363" Permanent="yes">
+        <RegistryKey Root="HKLM" Key="Software\CTC\Outlook_ExternalPrompt">
+          <RegistryValue Id="AttachTitle"
+                         KeyPath="yes"
+                         Name="AttachmentMessageTitle"
+                         Action="write"
+                         Value="Attention!!"
+                         Type="string"/>
+        </RegistryKey>
+      </Component>
+
+      <Component Id="CMP_ExternalMSgTitle"
+       Guid="42128DBA-1492-421D-917C-876D0A4B13D9" Permanent="yes">
+        <RegistryKey Root="HKLM" Key="Software\CTC\Outlook_ExternalPrompt">
+          <RegistryValue Id="ExternalMshTitle"
+                         KeyPath="yes"
+                         Name="ExternalRecpMessageTitle"
+                         Action="write"
+                         Value="Attention!!"
+                         Type="string"/>
+        </RegistryKey>
+      </Component>
+
+      <Component Id="CMP_SendButtonSettings"
+       Guid="7E583C54-1699-4482-A49F-FD6083F2335B" Permanent="yes">
+        <RegistryKey Root="HKLM" Key="Software\CTC\Outlook_ExternalPrompt">
+          <RegistryValue Id="SendButton"
+                         KeyPath="yes"
+                         Name="SendButttonText"
+                         Action="write"
+                         Value="Send"
+                         Type="string"/>
+        </RegistryKey>
+      </Component>
+
+      <Component Id="CMP_DSendButtonSettings"
+           Guid="08B63892-7D69-4BBA-AC9A-D86F330446F5" Permanent="yes">
+        <RegistryKey Root="HKLM" Key="Software\CTC\Outlook_ExternalPrompt">
+          <RegistryValue Id="DSendButton"
+                         KeyPath="yes"
+                         Name="DSendButttonText"
+                         Action="write"
+                         Value="Don't Send"
+                         Type="string"/>
+        </RegistryKey>
+      </Component>
+      <Component Id="CMP_AcceptedDomains"
+         Guid="78A57E44-CD59-42FE-9967-E55502D2AFA3" Permanent="yes">
+        <RegistryKey Root="HKLM" Key="Software\CTC\Outlook_ExternalPrompt">
+          <RegistryValue Id="AcceptedDomains"
+                         KeyPath="yes"
+                         Name="AcceptedDomainList"
+                         Action="write"
+                         Value="greateasternlife.com,oac.com.my,oac.com.sg,greateasterntakaful.com,greateasterngeneral.com,lifeisgreat.net,target.greateasternlife.com,
+target.oac.com.my,target.oac.com.sg,target.greateasterntakaful.com,lifeisgreat.com.sg,lifeisgreat.com.my,ocbc.com,ocbc.local,dr.lifeisgreat.co.id,gelife.com.sg,greateasternfa.com.sg,
+i-great.com.my,lifeisgreat.co.id,lifeisgreat.com.bn,lifeisgreat.com.vn,target.gelife.com.sg,target.greateasternfa.com.sg,
+target.i-great.com.my,target.lifeisgreat.co.id,target1.greateasternlife.com,Alliancefg.com,Alliancebg.com.my,Alliancebg.com,Alliancedbs.com,Forest.alliancebg"
+                         Type="string"/>
+        </RegistryKey>
+      </Component>
+
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="LogFiles" Directory="LOGS">
+      <Component Id="mylogfiles" Guid="9017B713-04B4-4F9D-B747-97F0810D3CC2">
+        <File Id="logs"
+              Source="$(var.MyDir)\log4net.xml"
+              KeyPath="yes"/>
+      </Component>
+    </ComponentGroup>
+
+  </Fragment>
+
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="PRODUCTNAME">
+      <!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+      <!-- <Component Id="ProductComponent"> -->
+
+      <Component Id="CMP_OutlookPopupDLL" Guid="60BB0C2D-7814-4DE1-9446-64CBDBD930B8">
+        <File Id="FILE_Installfolder_CFDLL"
+        Source="$(var.MyDir)\OutlookPopup.dll"
+        KeyPath="yes" />
+      </Component>
+      <Component Id="CMP_OutlookPopupManifest" Guid="02CF4C55-4F9A-46FD-868E-BD938283370E">
+        <File Id="FILE_Installfolder_CFDLLManifest"
+        Source="$(var.MyDir)\OutlookPopup.dll.Manifest"
+        KeyPath="yes" />
+      </Component>
+      <Component Id="CMP_OutlookPopupvsto" Guid="16B54B5E-DB1A-4A1D-9792-02CA2E77931F">
+        <File Id="FILE_Installfolder_CFVSTO"
+        Source="$(var.MyDir)\OutlookPopup.vsto"
+        KeyPath="yes" />
+      </Component>
+      <Component Id="CMP_ToolCommonUtilities" Guid="8185254D-8566-4324-91EE-506ADA56BA41">
+        <File Id="FILE_Installfolder_ToolCommonUtilities"
+        Source="$(var.MyDir)\Microsoft.Office.Tools.Common.v4.0.Utilities.dll"
+        KeyPath="yes" />
+      </Component>
+
+      <Component Id="CMP_ToolCommonUtilitiesxml" Guid="5FAE7C05-12FB-4E2E-A7A8-ADB621E7E234">
+        <File Id="FILE_Installfolder_ToolCommonUtilitiesxml"
+        Source="$(var.MyDir)\Microsoft.Office.Tools.Common.v4.0.Utilities.xml"
+        KeyPath="yes" />
+      </Component>
+
+      <Component Id="CMP_ToolOutlookUtilities" Guid="1AD42494-FFD4-45E2-8E71-C3BCF04487A6">
+        <File Id="FILE_Installfolder_ToolOutlookUtilities"
+        Source="$(var.MyDir)\Microsoft.Office.Tools.Outlook.v4.0.Utilities.dll"
+        KeyPath="yes" />
+      </Component>
+
+      <Component Id="CMP_ToolOutlookUtilitiesxml" Guid="B216769B-F942-4EBA-A7A2-A4D7496079DF">
+        <File Id="FILE_Installfolder_ToolOutlookUtilitiesxml"
+        Source="$(var.MyDir)\Microsoft.Office.Tools.Outlook.v4.0.Utilities.xml"
+        KeyPath="yes" />
+      </Component>
+
+      <Component Id="CMP_log4Net" Guid="80C740C8-FFF1-498C-AD2C-C60C4C003F33">
+        <File Id="FILE_Installfolder_log4Net"
+        Source="$(var.MyDir)\log4net.dll"
+        KeyPath="yes" />
+      </Component>
+      <Component Id="CMP_appConfig" Guid="1AA988E9-F4E5-457F-99B2-28DE3DE64CCF">
+        <File Id="FILE_Installfolder_appConfig"
+        Source="$(var.MyDir)\OutlookPopup.dll.config"
+        KeyPath="yes" />
+      </Component>
+
+      <Component Id="CMP_appConfigxml" Guid="2A4E0917-85E4-4770-B1C9-EA70F11F826D">
+        <File Id="FILE_Installfolder_appConfigxml"
+        Source="$(var.MyDir)\log4net.xml"
+        KeyPath="yes" />
+      </Component>
+
+
+
+      <!-- TODO: Insert files, registry keys, and other resources here. -->
+
+      <!-- </Component> -->
+    </ComponentGroup>
+  </Fragment>
+</Wix>
