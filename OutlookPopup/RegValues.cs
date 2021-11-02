@@ -16,7 +16,7 @@ namespace OutlookPopup
         public void createRegistryKeys()
         {
             Microsoft.Win32.RegistryKey key;
-            key = Microsoft.Win32.Registry.LocalMachine.CreateSubKey("Software\\CTC\\Outlook_ExternalPrompt");
+            key = Microsoft.Win32.Registry.LocalMachine.CreateSubKey("Software\\Zepto\\OutlookMailPrompt");
             key.SetValue("AttachmentPromptEnabled",1);
             key.SetValue("ExternalRecpPromptEnabled", 1);
             key.SetValue("AttachmentMessageBody", "This email will be sent to an external party. Please ensure sensitive and/or confidential information has been encrypted as per Great Eastern IS Policy.");
@@ -33,14 +33,14 @@ namespace OutlookPopup
         public void readRegistryKeys()
         {
 
-           // Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software\\CTC\\Outlook_ExternalPrompt");
+           // Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software\\CTC\\OutlookMailPrompt");
              try
              {
 
                 using (var view32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,
                                                 RegistryView.Registry32))
                 {
-                    using (var key = view32.OpenSubKey("Software\\CTC\\Outlook_ExternalPrompt", false))
+                    using (var key = view32.OpenSubKey("Software\\Zepto\\OutlookMailPrompt", false))
                     {
                         // actually accessing Wow6432Node 
                         //if it does exist, retrieve the stored values  

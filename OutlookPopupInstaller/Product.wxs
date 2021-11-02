@@ -33,8 +33,8 @@
     <Directory Id="TARGETDIR" Name="SourceDir">
 
       <Directory Id="CommonAppDataFolder">
-        <Directory Id="LOGSFOLDER" Name="Point5Nyble">
-          <Directory Id="LOGS" Name="OutlookPopup"/>
+        <Directory Id="LOGSFOLDER" Name="Zepto">
+          <Directory Id="LOGS" Name="Outlook Mail Prompt"/>
         </Directory>
       </Directory>
 
@@ -109,7 +109,7 @@
 
       <Component Id="CMP_AttachmentPromptSettings"
        Guid="53B1C955-5D26-44A1-8F8D-5345AC0E364A" Permanent="yes">
-        <RegistryKey Root="HKLM" Key="Software\CTC\Outlook_ExternalPrompt">
+        <RegistryKey Root="HKLM" Key="Software\Zepto\OutlookMailPrompt">
           <RegistryValue Id="AttachSettings"
                          KeyPath="yes"
                          Name="AttachmentPromptEnabled"
@@ -121,7 +121,7 @@
 
       <Component Id="CMP_ExternalRecpPromptSettings"
        Guid="94D337B5-EF09-430D-9E49-80CE46088BD0" Permanent="yes">
-        <RegistryKey Root="HKLM" Key="Software\CTC\Outlook_ExternalPrompt">
+        <RegistryKey Root="HKLM" Key="Software\Zepto\OutlookMailPrompt">
           <RegistryValue Id="ExternalRecp"
                          KeyPath="yes"
                          Name="ExternalRecpPromptEnabled"
@@ -133,7 +133,7 @@
 
       <Component Id="CMP_AttachmentMsgBody"
        Guid="1D789BA2-BAF0-4915-8483-61B7C06E03C2" Permanent="yes">
-        <RegistryKey Root="HKLM" Key="Software\CTC\Outlook_ExternalPrompt">
+        <RegistryKey Root="HKLM" Key="Software\Zepto\OutlookMailPrompt">
           <RegistryValue Id="AttachBody"
                          KeyPath="yes"
                          Name="AttachmentMessageBody"
@@ -145,7 +145,7 @@ Governance Policy.\nDo you want to proceed?"
       </Component>
       <Component Id="CMP_ExternalRecpMsgBody"
        Guid="10EC2297-44A0-48D9-913D-9F516ED9E2F3" Permanent="yes">
-        <RegistryKey Root="HKLM" Key="Software\CTC\Outlook_ExternalPrompt">
+        <RegistryKey Root="HKLM" Key="Software\Zepto\OutlookMailPrompt">
           <RegistryValue Id="ExternalPropmtBody"
                          KeyPath="yes"
                          Name="ExternalRecpMessageBody"
@@ -157,7 +157,7 @@ Governance Policy.\nDo you want to proceed?"
       </Component>
       <Component Id="CMP_AttachmentMsgTitle"
        Guid="92305385-FF57-45B5-8949-F5B1BE34E363" Permanent="yes">
-        <RegistryKey Root="HKLM" Key="Software\CTC\Outlook_ExternalPrompt">
+        <RegistryKey Root="HKLM" Key="Software\Zepto\OutlookMailPrompt">
           <RegistryValue Id="AttachTitle"
                          KeyPath="yes"
                          Name="AttachmentMessageTitle"
@@ -169,7 +169,7 @@ Governance Policy.\nDo you want to proceed?"
 
       <Component Id="CMP_ExternalMSgTitle"
        Guid="42128DBA-1492-421D-917C-876D0A4B13D9" Permanent="yes">
-        <RegistryKey Root="HKLM" Key="Software\CTC\Outlook_ExternalPrompt">
+        <RegistryKey Root="HKLM" Key="Software\Zepto\OutlookMailPrompt">
           <RegistryValue Id="ExternalMshTitle"
                          KeyPath="yes"
                          Name="ExternalRecpMessageTitle"
@@ -181,7 +181,7 @@ Governance Policy.\nDo you want to proceed?"
 
       <Component Id="CMP_SendButtonSettings"
        Guid="7E583C54-1699-4482-A49F-FD6083F2335B" Permanent="yes">
-        <RegistryKey Root="HKLM" Key="Software\CTC\Outlook_ExternalPrompt">
+        <RegistryKey Root="HKLM" Key="Software\Zepto\OutlookMailPrompt">
           <RegistryValue Id="SendButton"
                          KeyPath="yes"
                          Name="SendButttonText"
@@ -193,7 +193,7 @@ Governance Policy.\nDo you want to proceed?"
 
       <Component Id="CMP_DSendButtonSettings"
            Guid="08B63892-7D69-4BBA-AC9A-D86F330446F5" Permanent="yes">
-        <RegistryKey Root="HKLM" Key="Software\CTC\Outlook_ExternalPrompt">
+        <RegistryKey Root="HKLM" Key="Software\Zepto\OutlookMailPrompt">
           <RegistryValue Id="DSendButton"
                          KeyPath="yes"
                          Name="DSendButttonText"
@@ -204,7 +204,7 @@ Governance Policy.\nDo you want to proceed?"
       </Component>
       <Component Id="CMP_AcceptedDomains"
          Guid="78A57E44-CD59-42FE-9967-E55502D2AFA3" Permanent="yes">
-        <RegistryKey Root="HKLM" Key="Software\CTC\Outlook_ExternalPrompt">
+        <RegistryKey Root="HKLM" Key="Software\Zepto\OutlookMailPrompt">
           <RegistryValue Id="AcceptedDomains"
                          KeyPath="yes"
                          Name="AcceptedDomainList"
