@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Product Id="*" Name="OutlookPopup" Language="1033"
-           Version="1.0.2.0" Manufacturer="CTC" UpgradeCode="D37CB28A-9EF9-4A23-B1CC-7DD29D53EE13">
+           Version="1.0.3.0" Manufacturer="Zepto" UpgradeCode="D37CB28A-9EF9-4A23-B1CC-7DD29D53EE13">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed."
                   Schedule="afterInstallInitialize"
@@ -20,12 +20,12 @@
     <Property Id="ARPPRODUCTICON"
      Value="myIcon" />
     <Property Id="ARPCOMMENTS"
-     Value="(c) Point5Nyble" />
+     Value="(c) Zepto" />
     <Property Id="ARPNOREPAIR"
      Value="1" />
     <Property Id="ARPCONTACT"
      Value="abhinovpankaj1@gmail.com" />
-    <Property Id="ARPHELPLINK" Value="http://www.point5nyble.com/"/>
+    <Property Id="ARPHELPLINK" Value="http://www.zepto.com/"/>
 
   </Fragment>
 
@@ -40,13 +40,13 @@
 
       <?if $(sys.BUILDARCH)=x64?>
       <Directory Id="ProgramFiles64Folder">
-        <Directory Id="INSTALLFOLDER" Name="Point5Nyble" >
+        <Directory Id="INSTALLFOLDER" Name="Zepto" >
           <Directory Id="PRODUCTNAME" Name="OutlookPopup"/>
         </Directory>
       </Directory>
       <?else?>
       <Directory Id="ProgramFilesFolder">
-        <Directory Id="INSTALLFOLDER" Name="Point5Nyble" >
+        <Directory Id="INSTALLFOLDER" Name="Zepto" >
           <Directory Id="PRODUCTNAME" Name="OutlookPopup"/>
         </Directory>
       </Directory>
@@ -209,10 +209,7 @@ Governance Policy.\nDo you want to proceed?"
                          KeyPath="yes"
                          Name="AcceptedDomainList"
                          Action="write"
-                         Value="greateasternlife.com,oac.com.my,oac.com.sg,greateasterntakaful.com,greateasterngeneral.com,lifeisgreat.net,target.greateasternlife.com,
-target.oac.com.my,target.oac.com.sg,target.greateasterntakaful.com,lifeisgreat.com.sg,lifeisgreat.com.my,ocbc.com,ocbc.local,dr.lifeisgreat.co.id,gelife.com.sg,greateasternfa.com.sg,
-i-great.com.my,lifeisgreat.co.id,lifeisgreat.com.bn,lifeisgreat.com.vn,target.gelife.com.sg,target.greateasternfa.com.sg,
-target.i-great.com.my,target.lifeisgreat.co.id,target1.greateasternlife.com,Alliancefg.com,Alliancebg.com.my,Alliancebg.com,Alliancedbs.com,Forest.alliancebg"
+                         Value="Alliancefg.com,Alliancebg.com.my,Alliancebg.com,Alliancedbs.com,Forest.alliancebg"
                          Type="string"/>
         </RegistryKey>
       </Component>
@@ -258,11 +255,11 @@ target.i-great.com.my,target.lifeisgreat.co.id,target1.greateasternlife.com,Alli
         KeyPath="yes" />
       </Component>
 
-      <Component Id="CMP_ToolCommonUtilitiesxml" Guid="5FAE7C05-12FB-4E2E-A7A8-ADB621E7E234">
+      <!--<Component Id="CMP_ToolCommonUtilitiesxml" Guid="5FAE7C05-12FB-4E2E-A7A8-ADB621E7E234">
         <File Id="FILE_Installfolder_ToolCommonUtilitiesxml"
         Source="$(var.MyDir)\Microsoft.Office.Tools.Common.v4.0.Utilities.xml"
         KeyPath="yes" />
-      </Component>
+      </Component>-->
 
       <Component Id="CMP_ToolOutlookUtilities" Guid="1AD42494-FFD4-45E2-8E71-C3BCF04487A6">
         <File Id="FILE_Installfolder_ToolOutlookUtilities"
@@ -270,11 +267,11 @@ target.i-great.com.my,target.lifeisgreat.co.id,target1.greateasternlife.com,Alli
         KeyPath="yes" />
       </Component>
 
-      <Component Id="CMP_ToolOutlookUtilitiesxml" Guid="B216769B-F942-4EBA-A7A2-A4D7496079DF">
+      <!--<Component Id="CMP_ToolOutlookUtilitiesxml" Guid="B216769B-F942-4EBA-A7A2-A4D7496079DF">
         <File Id="FILE_Installfolder_ToolOutlookUtilitiesxml"
         Source="$(var.MyDir)\Microsoft.Office.Tools.Outlook.v4.0.Utilities.xml"
         KeyPath="yes" />
-      </Component>
+      </Component>-->
 
       <Component Id="CMP_log4Net" Guid="80C740C8-FFF1-498C-AD2C-C60C4C003F33">
         <File Id="FILE_Installfolder_log4Net"
