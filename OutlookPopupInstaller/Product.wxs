@@ -138,8 +138,8 @@
                          KeyPath="yes"
                          Name="AttachmentMessageBody"
                          Action="write"
-                         Value="This email will be sent to an external party.\nPlease validate the intended recipient(s) ensure this email comply with the Group Data
-Governance Policy.\nDo you want to proceed?"
+                        Value="This email will be sent to an external party.\nPlease validate the intended recipient(s) ensure this email comply with Section 133(1) of Financial Services Act
+ 2013 and Section 9(1) of Personal Data Protection Act 2010.\nDo you want to proceed?"
                          Type="string"/>
         </RegistryKey>
       </Component>
@@ -150,8 +150,8 @@ Governance Policy.\nDo you want to proceed?"
                          KeyPath="yes"
                          Name="ExternalRecpMessageBody"
                          Action="write"
-                         Value="This email will be sent to an external party.\nPlease validate the intended recipient(s) ensure this email comply with the Group Data
-Governance Policy.\nDo you want to proceed?"
+                         Value="This email will be sent to an external party.\nPlease validate the intended recipient(s) ensure this email comply with Section 133(1) of Financial Services Act
+ 2013 and Section 9(1) of Personal Data Protection Act 2010.\nDo you want to proceed?"
                          Type="string"/>
         </RegistryKey>
       </Component>
