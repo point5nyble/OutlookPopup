@@ -138,8 +138,7 @@
                          KeyPath="yes"
                          Name="AttachmentMessageBody"
                          Action="write"
-                        Value="This email will be sent to an external party.\nPlease validate the intended recipient(s) ensure this email comply with Section 133(1) of Financial Services Act
- 2013 and Section 9(1) of Personal Data Protection Act 2010.\nDo you want to proceed?"
+                        Value="This email will be sent to an external party.&#10;&#13;Please validate the intended recipient(s) ensure this email &#13;comply with Section 133(1) of Financial Services Act 2013 &#13;and Section 9(1) of Personal Data Protection Act 2010.&#10;&#13;Do you want to proceed ?"
                          Type="string"/>
         </RegistryKey>
       </Component>
@@ -150,8 +149,7 @@
                          KeyPath="yes"
                          Name="ExternalRecpMessageBody"
                          Action="write"
-                         Value="This email will be sent to an external party.\nPlease validate the intended recipient(s) ensure this email comply with Section 133(1) of Financial Services Act
- 2013 and Section 9(1) of Personal Data Protection Act 2010.\nDo you want to proceed?"
+                         Value="This email will be sent to an external party.&#10;&#13;Please validate the intended recipient(s) ensure this email &#13;comply with Section 133(1) of Financial Services Act 2013 &#13;and Section 9(1) of Personal Data Protection Act 2010.&#10;&#13;Do you want to proceed ?"
                          Type="string"/>
         </RegistryKey>
       </Component>
@@ -209,7 +207,7 @@
                          KeyPath="yes"
                          Name="AcceptedDomainList"
                          Action="write"
-                         Value="Alliancefg.com,Alliancebg.com.my,Alliancebg.com,Alliancedbs.com,Forest.alliancebg"
+                         Value="alliancefg.com,alliancebg.com.my,alliancebg.com,alliancedbs.com,forest.alliancebg"
                          Type="string"/>
         </RegistryKey>
       </Component>

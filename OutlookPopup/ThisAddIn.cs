@@ -9,6 +9,7 @@ using System.Net;
 using System.DirectoryServices;
 using log4net;
 using System.Windows.Interop;
+using System.Threading.Tasks;
 //using Microsoft.Exchange.WebServices.Data;
 namespace OutlookPopup
 {
@@ -24,12 +25,30 @@ namespace OutlookPopup
         
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
-     
-            this.Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
+            //call license service
+            IsLicenseActive();
+            
             log4net.Config.XmlConfigurator.Configure();
             log.Info("Plugin Loaded Successfully");
         }
 
+        private async void IsLicenseActive()
+        {
+            string emailId = Globals.ThisAddIn.Application.Session.CurrentUser.Address;
+            bool isActive = await LicenseService.IsLicenseValidAsync(emailId);
+            bool hasOfflineLimitReached = await LicenseService.HasOfflineLimitReached();
+            if (isActive)
+            {
+                this.Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
+            }
+            else
+            {
+                if (!hasOfflineLimitReached)
+                {
+                    this.Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
+                }
+            }
+        }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
