@@ -26,8 +26,8 @@ namespace OutlookPopup
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             //call license service
-            IsLicenseActive();
-            
+            //IsLicenseActive();
+            this.Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
             log4net.Config.XmlConfigurator.Configure();
             log.Info("Plugin Loaded Successfully");
         }

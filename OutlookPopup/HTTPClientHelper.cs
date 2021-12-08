@@ -2,6 +2,7 @@
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -82,7 +83,9 @@ namespace OutlookPopup
         public async Task<T> PostRequest(string apiUrl, T postObject, CancellationToken cancellationToken)
         {
             T result = default(T);
-            var response = await Client.PostAsync(apiUrl, new JsonContent(postObject), cancellationToken).ConfigureAwait(false);
+
+            var postContent = JsonContent.Create(postObject);
+            var response = await Client.PostAsync(apiUrl, postContent, cancellationToken).ConfigureAwait(false);
             if (response.IsSuccessStatusCode)
             {
                 await response.Content.ReadAsStringAsync().ContinueWith((Task<string> x) =>
@@ -108,7 +111,8 @@ namespace OutlookPopup
         /// <param name="cancellationToken"></param>
         public async Task PutRequest(string apiUrl, T putObject, CancellationToken cancellationToken)
         {
-            var response = await Client.PutAsync(apiUrl, new JsonContent(putObject), cancellationToken).ConfigureAwait(false);
+            var putContent = JsonContent.Create(putObject);
+            var response = await Client.PutAsync(apiUrl, putContent, cancellationToken).ConfigureAwait(false);
             if (!response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();

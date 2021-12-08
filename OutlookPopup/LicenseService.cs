@@ -18,6 +18,7 @@ namespace OutlookPopup
 
         public static Task<bool> IsLicenseValidAsync(string emailId)
         {
+
             return Task.FromResult(true);
         }
 

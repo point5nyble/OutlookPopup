@@ -6,7 +6,7 @@
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed."
                   Schedule="afterInstallInitialize"
                   AllowSameVersionUpgrades="yes"  />
-    <MediaTemplate EmbedCab="yes" />
+    <MediaTemplate EmbedCab="yes"  />
 
     <Feature Id="ProductFeature" Title="OutlookPopup" Level="1">
       <ComponentGroupRef Id="ProductComponents" />
@@ -21,7 +21,7 @@
      Value="myIcon" />
     <Property Id="ARPCOMMENTS"
      Value="(c) Zepto" />
-    <Property Id="ARPNOREPAIR"
+    <Property Id="ARPNOREPAIR"       
      Value="1" />
     <Property Id="ARPCONTACT"
      Value="abhinovpankaj1@gmail.com" />
@@ -38,30 +38,77 @@
         </Directory>
       </Directory>
 
-      <?if $(sys.BUILDARCH)=x64?>
+      <!--<?if $(sys.BUILDARCH)=x64?>
       <Directory Id="ProgramFiles64Folder">
         <Directory Id="INSTALLFOLDER" Name="Zepto" >
           <Directory Id="PRODUCTNAME" Name="OutlookPopup"/>
         </Directory>
       </Directory>
-      <?else?>
+      <?else?>-->
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="Zepto" >
           <Directory Id="PRODUCTNAME" Name="OutlookPopup"/>
         </Directory>
       </Directory>
-      <?endif?>
+      <!--<?endif?>-->
     </Directory>
-
-
 
   </Fragment>
   <Fragment>
-    <ComponentGroup Id="RegistryComponents"
+    <ComponentGroup Id="RegistryComponents"  
        Directory="PRODUCTNAME">
       <Component Id="CMP_RegDesc"
       Guid="C08CB4ED-2CC7-4256-ACC9-E9EFD6DDF142">
         <RegistryValue Id="Description"
+        KeyPath="yes"
+        Action="write"
+        Root="HKLM"
+        Key="Software\Microsoft\Office\Outlook\Addins\OutlookPopup"
+        Name="Description"
+        Value="AddIn to Warn in case Users try to send mail or attachments to external domains."
+        Type="string" />
+      </Component>
+
+      <Component Id="CMP_RegFrName"  
+         Guid="05BB003F-76DC-4817-8CAB-34137F933EF8">
+        <RegistryValue Id="FriendlyName"
+        KeyPath="yes"
+        Action="write"
+        Root="HKLM"
+        Key="Software\Microsoft\Office\Outlook\Addins\OutlookPopup"
+        Name="FriendlyName"
+        Value="OutlookPopup AddIn"
+        Type="string" />
+      </Component>
+
+      <Component Id="CMP_RegLoadBehaviour" 
+        Guid="0B65C245-09F6-442D-B4FC-0DDFA31FE9E1">
+        <RegistryValue Id="LoadBehavior"  
+        KeyPath="yes"
+        Action="write"
+        Root="HKLM"
+        Key="Software\Microsoft\Office\Outlook\Addins\OutlookPopup"
+        Name="LoadBehavior"
+        Value="3"
+        Type="integer" />
+      </Component>
+
+      <Component Id="CMP_RegManifest" 
+         Guid="D23ABCB8-8E1F-4243-AA85-F6C46450DEC7">
+        <RegistryKey Root="HKLM" Key="Software\Microsoft\Office\Outlook\Addins\OutlookPopup">
+          <RegistryValue Id="ManifestPath"
+            KeyPath="yes"
+            Name="Manifest"
+            Action="write"
+            Value="file:///[PRODUCTNAME]OutlookPopup.vsto|vstolocal"
+            Type="string"/>
+        </RegistryKey>
+      </Component>
+      
+      
+      <!--<Component Id="CMP_RegDescC"
+      Guid="C08CB4ED-2CC7-4256-ACC9-E9EFD6DDF143">
+        <RegistryValue Id="DescriptionC"
         KeyPath="yes"
         Action="write"
         Root="HKCU"
@@ -71,9 +118,9 @@
         Type="string" />
       </Component>
 
-      <Component Id="CMP_RegFrName"
-         Guid="05BB003F-76DC-4817-8CAB-34137F933EF8">
-        <RegistryValue Id="FriendlyName"
+      <Component Id="CMP_RegFrNameC"  
+         Guid="05BB003F-76DC-4817-8CAB-34137F933EF9">
+        <RegistryValue Id="FriendlyNameC"
         KeyPath="yes"
         Action="write"
         Root="HKCU"
@@ -83,9 +130,9 @@
         Type="string" />
       </Component>
 
-      <Component Id="CMP_RegLoadBehaviour"
-        Guid="0B65C245-09F6-442D-B4FC-0DDFA31FE9E1">
-        <RegistryValue Id="LoadBehavior"
+      <Component Id="CMP_RegLoadBehaviourC" 
+        Guid="0B65C245-09F6-442D-B4FC-0DDFA31FE9E6">
+        <RegistryValue Id="LoadBehaviorC"  
         KeyPath="yes"
         Action="write"
         Root="HKCU"
@@ -95,17 +142,17 @@
         Type="integer" />
       </Component>
 
-      <Component Id="CMP_RegManifest"
-         Guid="D23ABCB8-8E1F-4243-AA85-F6C46450DEC7">
+      <Component Id="CMP_RegManifestC" 
+         Guid="D23ABCB8-8E1F-4243-AA85-F6C46450DEC5">
         <RegistryKey Root="HKCU" Key="Software\Microsoft\Office\Outlook\Addins\OutlookPopup">
-          <RegistryValue Id="ManifestPath"
+          <RegistryValue Id="ManifestPathC"
             KeyPath="yes"
             Name="Manifest"
             Action="write"
             Value="file:///[PRODUCTNAME]OutlookPopup.vsto|vstolocal"
             Type="string"/>
         </RegistryKey>
-      </Component>
+      </Component>-->
 
       <Component Id="CMP_AttachmentPromptSettings"
        Guid="53B1C955-5D26-44A1-8F8D-5345AC0E364A" Permanent="yes">
@@ -138,7 +185,7 @@
                          KeyPath="yes"
                          Name="AttachmentMessageBody"
                          Action="write"
-                        Value="This email will be sent to an external party.&#10;&#13;Please validate the intended recipient(s) ensure this email &#13;comply with Section 133(1) of Financial Services Act 2013 &#13;and Section 9(1) of Personal Data Protection Act 2010.&#10;&#13;Do you want to proceed ?"
+                        Value="This email will be sent to an external party.&#10;&#13;Please validate the intended recipient(s) ensure this email &#13;complies with Section 133(1) of Financial Services Act 2013 &#13;and Section 9(1) of Personal Data Protection Act 2010.&#10;&#13;Do you want to proceed ?"
                          Type="string"/>
         </RegistryKey>
       </Component>
@@ -149,7 +196,7 @@
                          KeyPath="yes"
                          Name="ExternalRecpMessageBody"
                          Action="write"
-                         Value="This email will be sent to an external party.&#10;&#13;Please validate the intended recipient(s) ensure this email &#13;comply with Section 133(1) of Financial Services Act 2013 &#13;and Section 9(1) of Personal Data Protection Act 2010.&#10;&#13;Do you want to proceed ?"
+                         Value="This email will be sent to an external party.&#10;&#13;Please validate the intended recipient(s) ensure this email &#13;complies with Section 133(1) of Financial Services Act 2013 &#13;and Section 9(1) of Personal Data Protection Act 2010.&#10;&#13;Do you want to proceed ?"
                          Type="string"/>
         </RegistryKey>
       </Component>

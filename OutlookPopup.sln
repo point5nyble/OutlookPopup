@@ -1,36 +1,54 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutlookPopup", "OutlookPopup\OutlookPopup.csproj", "{EB46F207-7430-4066-A8B3-236D4DE6184B}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "OutlookPopupInstaller", "OutlookPopupInstaller\OutlookPopupInstaller.wixproj", "{1106605D-AAE2-46A9-BC7F-F0AD2BCF1084}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "OutlookAddinInstaller", "OutlookAddinInstaller\OutlookAddinInstaller.vdproj", "{1157197E-C2E9-44BE-8FBB-BA48FA71C642}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{EB46F207-7430-4066-A8B3-236D4DE6184B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EB46F207-7430-4066-A8B3-236D4DE6184B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB46F207-7430-4066-A8B3-236D4DE6184B}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{EB46F207-7430-4066-A8B3-236D4DE6184B}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{EB46F207-7430-4066-A8B3-236D4DE6184B}.Debug|x86.Build.0 = Debug|Any CPU
 		{EB46F207-7430-4066-A8B3-236D4DE6184B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB46F207-7430-4066-A8B3-236D4DE6184B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB46F207-7430-4066-A8B3-236D4DE6184B}.Release|x64.ActiveCfg = Release|x64
+		{EB46F207-7430-4066-A8B3-236D4DE6184B}.Release|x64.Build.0 = Release|x64
 		{EB46F207-7430-4066-A8B3-236D4DE6184B}.Release|x86.ActiveCfg = Release|Any CPU
 		{EB46F207-7430-4066-A8B3-236D4DE6184B}.Release|x86.Build.0 = Release|Any CPU
 		{1106605D-AAE2-46A9-BC7F-F0AD2BCF1084}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{1106605D-AAE2-46A9-BC7F-F0AD2BCF1084}.Debug|x64.ActiveCfg = Debug|x86
 		{1106605D-AAE2-46A9-BC7F-F0AD2BCF1084}.Debug|x86.ActiveCfg = Debug|x86
 		{1106605D-AAE2-46A9-BC7F-F0AD2BCF1084}.Debug|x86.Build.0 = Debug|x86
 		{1106605D-AAE2-46A9-BC7F-F0AD2BCF1084}.Release|Any CPU.ActiveCfg = Release|x86
+		{1106605D-AAE2-46A9-BC7F-F0AD2BCF1084}.Release|x64.ActiveCfg = Release|x86
 		{1106605D-AAE2-46A9-BC7F-F0AD2BCF1084}.Release|x86.ActiveCfg = Release|x86
 		{1106605D-AAE2-46A9-BC7F-F0AD2BCF1084}.Release|x86.Build.0 = Release|x86
+		{1157197E-C2E9-44BE-8FBB-BA48FA71C642}.Debug|Any CPU.ActiveCfg = Debug
+		{1157197E-C2E9-44BE-8FBB-BA48FA71C642}.Debug|x64.ActiveCfg = Debug
+		{1157197E-C2E9-44BE-8FBB-BA48FA71C642}.Debug|x86.ActiveCfg = Debug
+		{1157197E-C2E9-44BE-8FBB-BA48FA71C642}.Release|Any CPU.ActiveCfg = Release
+		{1157197E-C2E9-44BE-8FBB-BA48FA71C642}.Release|x64.ActiveCfg = Release
+		{1157197E-C2E9-44BE-8FBB-BA48FA71C642}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4253E8D3-2D93-4964-B39D-44B5FD70B647}
 	EndGlobalSection
 EndGlobal

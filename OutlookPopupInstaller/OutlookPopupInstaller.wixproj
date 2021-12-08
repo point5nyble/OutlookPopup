@@ -17,6 +17,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>Debug;MyDir=F:\Freelancer\Jabez\OutlookPopup-master\OutlookPopup-master\OutlookPopup\bin\Release</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Product.wxs" />
