@@ -185,7 +185,7 @@
                          KeyPath="yes"
                          Name="AttachmentMessageBody"
                          Action="write"
-                        Value="This email will be sent to an external party.&#10;&#13;Please validate the intended recipient(s) ensure this email &#13;complies with Section 133(1) of Financial Services Act 2013 &#13;and Section 9(1) of Personal Data Protection Act 2010.&#10;&#13;Do you want to proceed ?"
+                         Value="This email will be sent to an external party.&#10;&#13;Please validate the intended recipient(s) ensure this email &#13;complies with Section 133(1) of Financial Services Act 2013 &#13;and Section 9(1) of Personal Data Protection Act 2010.&#10;&#13;Do you want to proceed ?"
                          Type="string"/>
         </RegistryKey>
       </Component>

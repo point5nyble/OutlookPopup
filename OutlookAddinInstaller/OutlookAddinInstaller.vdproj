@@ -304,12 +304,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_BF536687358539961870B770A664B4DA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_BA4F078962324107BDA4EBC8013468EA"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -445,6 +439,12 @@
         "OwnerKey" = "8:_A042A0AE06C0B60FF6A0FBC23B504098"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_BF536687358539961870B770A664B4DA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -463,6 +463,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -479,6 +495,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -1269,7 +1301,7 @@
         {
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_202D0AB0E3374EEE81494B798B33BF4B"
             {
-            "DefaultLocation" = "8:[ProgramFiles64Folder][Manufacturer]\\[ProductName]"
+            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -1318,7 +1350,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:OutlookAddinInstaller"
         "ProductCode" = "8:{C8B348DA-AEE2-4A71-AB26-B3DF04C8F12B}"
-        "PackageCode" = "8:{6C23CCC2-0398-41AA-A525-44B480F66C0A}"
+        "PackageCode" = "8:{8022E84C-428C-4C38-AEE9-A6D21F436D94}"
         "UpgradeCode" = "8:{B71D0236-F565-48F2-A810-BFCBAF8686C4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -1339,7 +1371,7 @@
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
-        "TargetPlatform" = "3:1"
+        "TargetPlatform" = "3:0"
         "PreBuildEvent" = "8:"
         "PostBuildEvent" = "8:"
         "RunPostBuildEvent" = "3:0"
@@ -1506,6 +1538,106 @@
                                         }
                                         "Values"
                                         {
+                                        }
+                                    }
+                                }
+                                "Values"
+                                {
+                                }
+                            }
+                            "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_B72F7AB561B84721BE5FD62924AEC036"
+                            {
+                            "Name" = "8:Zepto"
+                            "Condition" = "8:"
+                            "AlwaysCreate" = "11:FALSE"
+                            "DeleteAtUninstall" = "11:FALSE"
+                            "Transitive" = "11:FALSE"
+                                "Keys"
+                                {
+                                    "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_71233CCD865B43D49B11AD4322A27CB9"
+                                    {
+                                    "Name" = "8:OutlookMailPrompt"
+                                    "Condition" = "8:"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "DeleteAtUninstall" = "11:FALSE"
+                                    "Transitive" = "11:FALSE"
+                                        "Keys"
+                                        {
+                                        }
+                                        "Values"
+                                        {
+                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_041E3C1FEC2A4F61966BEF9968134334"
+                                            {
+                                            "Name" = "8:AttachmentMessageBody"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "ValueTypes" = "3:1"
+                                            "Value" = "8:This email will be sent to an external party. Please validate the intended recipient(s) ensure this email complies with Section 133(1) of Financial Services Act 2013 and Section 9(1) of Personal Data Protection Act 2010. Do you want to proceed ?"
+                                            }
+                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_06FD083810164C738E23DFB2129728D6"
+                                            {
+                                            "Name" = "8:ExternalRecpPromptEnabled"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "ValueTypes" = "3:1"
+                                            "Value" = "8:1"
+                                            }
+                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_3A5D97179B834DA7B242A58E8686835E"
+                                            {
+                                            "Name" = "8:ExternalRecpMessageTitle"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "ValueTypes" = "3:1"
+                                            "Value" = "8:Attention!!"
+                                            }
+                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_57D6642E7ECF442C9AD7F54C46B9D72D"
+                                            {
+                                            "Name" = "8:DSendButttonText"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "ValueTypes" = "3:1"
+                                            "Value" = "8:Don't Send"
+                                            }
+                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_6F96CF1CE413494BADF8188B03EBA13B"
+                                            {
+                                            "Name" = "8:AttachmentMessageTitle"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "ValueTypes" = "3:1"
+                                            "Value" = "8:Attention!!"
+                                            }
+                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_778CA3E4C5BD4BEF81E07A4E990B3C40"
+                                            {
+                                            "Name" = "8:AttachmentPromptEnabled"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "ValueTypes" = "3:1"
+                                            "Value" = "8:1"
+                                            }
+                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_A5122FAA6F0B41909EBB05768CFF0BF1"
+                                            {
+                                            "Name" = "8:ExternalRecpMessageBody"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "ValueTypes" = "3:1"
+                                            "Value" = "8:This email will be sent to an external party. Please validate the intended recipient(s) ensure this email complies with Section 133(1) of Financial Services Act 2013 and Section 9(1) of Personal Data Protection Act 2010. Do you want to proceed ?"
+                                            }
+                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_BA05188D935E4313B9EFAF2A7B64D5B6"
+                                            {
+                                            "Name" = "8:SendButttonText"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "ValueTypes" = "3:1"
+                                            "Value" = "8:Send"
+                                            }
+                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_EA4666FC07B54CD9BA81510235A16F40"
+                                            {
+                                            "Name" = "8:AcceptedDomainList"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "ValueTypes" = "3:1"
+                                            "Value" = "8:alliancefg.com,alliancebg.com.my,alliancebg.com,alliancedbs.com,forest.alliancebg"
+                                            }
                                         }
                                     }
                                 }
@@ -1927,7 +2059,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_BA4F078962324107BDA4EBC8013468EA"
             {
-            "SourcePath" = "8:..\\OutlookPopup\\obj\\Release\\OutlookPopup.dll"
+            "SourcePath" = "8:..\\OutlookPopup\\obj\\Debug\\OutlookPopup.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_202D0AB0E3374EEE81494B798B33BF4B"

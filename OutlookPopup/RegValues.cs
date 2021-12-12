@@ -22,7 +22,7 @@ namespace OutlookPopup
             key.SetValue("AttachmentMessageBody", "This email will be sent to an external party. Please ensure sensitive and/or confidential information has been encrypted as per Great Eastern IS Policy.");
             key.SetValue("AttachmentMessageTitle", "Attention!!");
             key.SetValue("ExternalRecpMessageTitle", "Warning!! External Recepient(s).");
-            key.SetValue("ExternalRecpMessageBody", "This email will be sent to an external party.!&#10;&#13;Please validate the intended recipient(s) ensure this email comply with Section 133(1) of Financial Services Act 2013 and Section 9(1) of Personal Data Protection Act 2010.!&#10;&#13;!&#10;&#13;Do you want to proceed ? ");
+            key.SetValue("ExternalRecpMessageBody", "This email will be sent to an external party.!&#10;&#13;Please validate the intended recipient(s) ensure this email complies with Section 133(1) of Financial Services Act 2013 and Section 9(1) of Personal Data Protection Act 2010.!&#10;&#13;!&#10;&#13;Do you want to proceed ? ");
             key.SetValue("SendButttonText", "Send");
             key.SetValue("DSendButtonText", "Don't Send");
             key.SetValue("AcceptedDomains", "zepto.com.my,outlook.com,rhingle.com");
@@ -63,8 +63,8 @@ namespace OutlookPopup
                             else
                             {
                            
-                                log.Info("Registry Values not found" + key.ToString());
-                                //createRegistryKeys();
+                                log.Info("Registry Values not found, Software\\Zepto\\OutlookMailPromp");
+                               //createRegistryKeys();
                             }
                    
                     }

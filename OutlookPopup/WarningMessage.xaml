@@ -41,18 +41,18 @@
                 Source="Resources\Stop.jpg" />
             <TextBlock
                 Grid.Column="1"
-                Margin="-5,10,20,10"
+                Margin="5,10,20,10"
                 FontWeight="Bold"
-                Text="{Binding ExternalRecpMessageBody}"
-                TextWrapping="NoWrap">
+                TextWrapping="Wrap">
 
-                <!--<Run Text="This email will be sent to an external party."/>
-                <LineBreak/>
+                <Run Text="This email will be sent to an external party." />
+                <LineBreak />
+                <LineBreak />
+                <Run Text="Please validate the intended recipient(s) ensure this email complies with Section 133(1) of Financial Services Act 2013 and Section 9(1) of Personal Data Protection Act 2010." />
 
-                <Run  Text="Please validate the intended recipient(s) ensure this email comply with the Group Data Governance Policy."/>
-
-                <LineBreak/>
-                <Run Text="Do you want to proceed?"/>-->
+                <LineBreak />
+                <LineBreak />
+                <Run Text="Do you want to proceed?" />
 
             </TextBlock>
         </Grid>
