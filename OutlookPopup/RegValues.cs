@@ -37,8 +37,9 @@ namespace OutlookPopup
              try
              {
 
-                using (var view32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,
-                                                RegistryView.Registry32))
+                
+
+                using (var view32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Default))
                 {
                     using (var key = view32.OpenSubKey("Software\\Zepto\\OutlookMailPrompt", false))
                     {
