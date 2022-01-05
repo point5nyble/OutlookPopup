@@ -34,5 +34,29 @@ namespace OutlookPopup.Properties {
                 this["ServerAddress"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("sds")]
+        public string token {
+            get {
+                return ((string)(this["token"]));
+            }
+            set {
+                this["token"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string emailId {
+            get {
+                return ((string)(this["emailId"]));
+            }
+            set {
+                this["emailId"] = value;
+            }
+        }
     }
 }

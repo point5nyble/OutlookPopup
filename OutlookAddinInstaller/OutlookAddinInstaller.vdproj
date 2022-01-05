@@ -499,15 +499,20 @@
             {
             "Enabled" = "11:TRUE"
             "PromptEnabled" = "11:TRUE"
-            "PrerequisitesLocation" = "2:1"
+            "PrerequisitesLocation" = "2:2"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
                 "Items"
                 {
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
                     {
-                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
-                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.VSTORuntime.4.0"
+                    {
+                    "Name" = "8:Microsoft Visual Studio 2010 Tools for Office Runtime (x86 and x64)"
+                    "ProductCode" = "8:Microsoft.VSTORuntime.4.0"
                     }
                 }
             }
@@ -1350,7 +1355,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:OutlookAddinInstaller"
         "ProductCode" = "8:{C8B348DA-AEE2-4A71-AB26-B3DF04C8F12B}"
-        "PackageCode" = "8:{186EDBD9-3C10-4FA7-B6B9-DD0A7A4EBB8A}"
+        "PackageCode" = "8:{61A4F248-9FD9-456F-9FF6-13BD595BBB4C}"
         "UpgradeCode" = "8:{B71D0236-F565-48F2-A810-BFCBAF8686C4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

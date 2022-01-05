@@ -2,34 +2,32 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace OutlookPopup
 {
     public class LicenseService
     {
-        
-        public void getLicense(ClientInfo client)
+     
+
+        public static async Task<bool> IsLicenseValidAsync(ClientInfo info, string token)
         {
 
-        }
+            var json = JsonSerializer.Serialize(info);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
 
-        public static Task<bool> IsLicenseValidAsync(string emailId)
-        {
-
-            return Task.FromResult(true);
-        }
-
-        public void UpdateClientInfo(ClientInfo client)
-        {
-
-        }
-
-        public void AddClientInfo(ClientInfo client)
-        {
-
+            var url = OutlookPopup.Properties.Settings.Default.ServerAddress + "api/checkLicense";
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("x-access-token", token);
+                var response = await client.PostAsync(url, data);
+                string result = response.Content.ReadAsStringAsync().Result;
+            }
+            return true;
         }
 
         internal static Task<bool> HasOfflineLimitReached()
@@ -74,6 +72,28 @@ namespace OutlookPopup
                 }
                 return Task.FromResult(false);
             }
+        }
+
+        internal static async Task<bool> IsTokenValid(string email, string token)
+        {
+            var json = JsonSerializer.Serialize(new ClientInfo { EmailId=email, MachineName="test"});
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var url = OutlookPopup.Properties.Settings.Default.ServerAddress + "api/checkLicense";
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add("x-access-token", token);
+                var response = await client.PostAsync(url, data);
+                
+                string result = response.Content.ReadAsStringAsync().Result;
+                if (result == "Invalid Token")
+                {
+                    return false;
+                }
+                else
+                    return true;
+            }
+            
         }
 
         [DllImport("wininet.dll")]

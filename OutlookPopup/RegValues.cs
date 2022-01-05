@@ -37,8 +37,6 @@ namespace OutlookPopup
              try
              {
 
-                
-
                 using (var view32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Default))
                 {
                     using (var key = view32.OpenSubKey("Software\\Zepto\\OutlookMailPrompt", false))
@@ -59,8 +57,8 @@ namespace OutlookPopup
                                 SendButttonText = key.GetValue("SendButttonText").ToString();
                                 DSendButtonText = key.GetValue("DSendButttonText").ToString();
                                 AcceptedDomains = key.GetValue("AcceptedDomainList").ToString();
-                           
-                            }
+                                //EndpointURL = key.GetValue("EndpointURL").ToString();
+                        }
                             else
                             {
                            
@@ -94,5 +92,6 @@ namespace OutlookPopup
 
         public string AcceptedDomains { get; set; }
 
+        public string EndpointURL { get; set; }
     }
 }

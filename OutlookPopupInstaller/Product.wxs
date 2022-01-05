@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Product Id="*" Name="OutlookPopup" Language="1033"
-           Version="1.0.3.0" Manufacturer="Zepto" UpgradeCode="D37CB28A-9EF9-4A23-B1CC-7DD29D53EE13">
+           Version="1.0.4.0" Manufacturer="Zepto" UpgradeCode="D37CB28A-9EF9-4A23-B1CC-7DD29D53EE13">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed."
                   Schedule="afterInstallInitialize"
@@ -38,19 +38,19 @@
         </Directory>
       </Directory>
 
-      <!--<?if $(sys.BUILDARCH)=x64?>
+      <?if $(sys.BUILDARCH)=x64?>
       <Directory Id="ProgramFiles64Folder">
         <Directory Id="INSTALLFOLDER" Name="Zepto" >
           <Directory Id="PRODUCTNAME" Name="OutlookPopup"/>
         </Directory>
       </Directory>
-      <?else?>-->
+      <?else?>
       <Directory Id="ProgramFilesFolder">
         <Directory Id="INSTALLFOLDER" Name="Zepto" >
           <Directory Id="PRODUCTNAME" Name="OutlookPopup"/>
         </Directory>
       </Directory>
-      <!--<?endif?>-->
+      <?endif?>
     </Directory>
 
   </Fragment>
