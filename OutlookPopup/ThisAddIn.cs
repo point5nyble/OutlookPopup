@@ -27,20 +27,26 @@ namespace OutlookPopup
         private  void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             //call license service
-           // IsLicenseActive();
-            //opendiaog();
+            // IsLicenseActive();
+
+            //this.Application.Startup += Application_Startup;
 
             this.Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
             log4net.Config.XmlConfigurator.Configure();
             log.Info("Plugin Loaded Successfully");
-           
 
         }
+
+        private void Application_Startup()
+        {
+            //opendiaog();
+        }
+
         private void opendiaog()
         {
             LoginControl loginwin = new LoginControl();
-            loginwin.InitializeAsync();
-            loginwin.ShowDialog();
+            //loginwin.InitializeAsync();
+            loginwin.Show();
         }
         bool isTokenValid=false;
         bool isActive = false;
@@ -100,7 +106,7 @@ namespace OutlookPopup
         
         public bool hasToSend=false;
 
-        private LoginUserControl myUserControl1;
+       
         private Microsoft.Office.Tools.CustomTaskPane myCustomTaskPane;
 
         const string PR_SMTP_ADDRESS = "http://schemas.microsoft.com/mapi/proptag/0x39FE001E";
@@ -273,8 +279,8 @@ namespace OutlookPopup
             log.Info("Item Send event hooked");
             if (!isTokenValid)
             {
-                myUserControl1 = new LoginUserControl();
-                myCustomTaskPane = this.CustomTaskPanes.Add(myUserControl1, "License Check");
+                //myUserControl1 = new LoginUserControl();
+                //myCustomTaskPane = this.CustomTaskPanes.Add(myUserControl1, "License Check");
                 myCustomTaskPane.Visible = true;
                 IsLicenseActive();
             }
