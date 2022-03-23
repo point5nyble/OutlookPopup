@@ -39,6 +39,9 @@ namespace OutlookPopup
             webView.CoreWebView2.WebResourceResponseReceived += CoreWebView2_WebResourceResponseReceived;
 
         }
+
+        
+
         private async void CoreWebView2_WebResourceResponseReceived(object sender, Microsoft.Web.WebView2.Core.CoreWebView2WebResourceResponseReceivedEventArgs e)
         {
             if (e.Request.Method == "POST")

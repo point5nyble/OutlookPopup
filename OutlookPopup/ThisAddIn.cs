@@ -30,11 +30,17 @@ namespace OutlookPopup
            IsLicenseActive();
            // opendiaog();
 
+            //this.Application.Startup += Application_Startup;
+
             this.Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
             log4net.Config.XmlConfigurator.Configure();
             log.Info("Plugin Loaded Successfully");
-           
 
+        }
+
+        private void Application_Startup()
+        {
+            //opendiaog();
         }
         private void opendialog()
         {
