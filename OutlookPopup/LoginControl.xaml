@@ -8,7 +8,7 @@
         Background="Orange"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
               Width="450" Loaded="Window_Loaded"
-    Height="700">
+    Height="700" WindowStartupLocation="CenterOwner" Title="License Check Login">
     <Grid Margin="5">
         <wv2:WebView2 Name="webView"  
                       VerticalAlignment="Stretch"
