@@ -27,8 +27,8 @@ namespace OutlookPopup
         private  void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             //call license service
-           // IsLicenseActive();
-            //opendiaog();
+           IsLicenseActive();
+           // opendiaog();
 
             this.Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
             log4net.Config.XmlConfigurator.Configure();
@@ -36,10 +36,10 @@ namespace OutlookPopup
            
 
         }
-        private void opendiaog()
+        private void opendialog()
         {
             LoginControl loginwin = new LoginControl();
-            loginwin.InitializeAsync();
+            
             loginwin.ShowDialog();
         }
         bool isTokenValid=false;
@@ -52,7 +52,7 @@ namespace OutlookPopup
             string email = OutlookPopup.Properties.Settings.Default.emailId;
             string token = OutlookPopup.Properties.Settings.Default.token;
             
-            bool isTokenValid = await LicenseService.IsTokenValid(email,token);
+            isTokenValid = await LicenseService.IsTokenValid(email,token);
             if (isTokenValid)
             {
                 ClientInfo info = new ClientInfo();
@@ -62,7 +62,7 @@ namespace OutlookPopup
 
                 isActive = await LicenseService.IsLicenseValidAsync(info, token);
             }
-            hasOfflineLimitReached = await LicenseService.HasOfflineLimitReached();
+            hasOfflineLimitReached = await LicenseService.HasOfflineLimitReachedAsync();
         }
 
         private string GetOutlookVersion()
@@ -100,18 +100,17 @@ namespace OutlookPopup
         
         public bool hasToSend=false;
 
-        private LoginUserControl myUserControl1;
-        private Microsoft.Office.Tools.CustomTaskPane myCustomTaskPane;
+        //private LoginUserControl myUserControl1;
+        //private Microsoft.Office.Tools.CustomTaskPane myCustomTaskPane;
 
         const string PR_SMTP_ADDRESS = "http://schemas.microsoft.com/mapi/proptag/0x39FE001E";
         public void Item_Send(object Item, ref bool Cancel)
         {
-
-            //ShwWindwLogic();
+            ShwWindwLogic();
             if  (regValues.SendButttonText==null)
                 regValues.readRegistryKeys();
 
-            if (regValues.ExternalRecpPromptEnabled==1)
+            if (regValues.ExternalRecpPromptEnabled == 1)
             {
                 if (Item is Outlook.MailItem)
                 {
@@ -127,7 +126,7 @@ namespace OutlookPopup
                         try
                         {
                             //var domain = addEntry.Address.Split('@');
-                            string domain =(string) pa.GetProperty(PR_SMTP_ADDRESS);
+                            string domain = (string)pa.GetProperty(PR_SMTP_ADDRESS);
 
                             if (!regValues.AcceptedDomains.Contains(domain.Split('@')[1]))
                             {
@@ -139,8 +138,8 @@ namespace OutlookPopup
 
                                 log.Info("External User found,Warning Window should be shown");
                                 WarningMessage window = new WarningMessage();
-                                
-                               //Set Popup as child of the active window of Outlook
+
+                                //Set Popup as child of the active window of Outlook
                                 Outlook.Inspector activeWindow = Globals.ThisAddIn.Application.ActiveWindow() as Outlook.Inspector;
                                 if (activeWindow != null)
                                 {
@@ -151,18 +150,18 @@ namespace OutlookPopup
                                 else
                                 {
                                     Outlook.Explorer activeExplorer = Globals.ThisAddIn.Application.ActiveWindow() as Outlook.Explorer;
-                                    if (activeExplorer!=null)
+                                    if (activeExplorer != null)
                                     {
                                         IntPtr outlookHwnd = new OfficeWin32Window(activeExplorer).Handle;
                                         WindowInteropHelper wih = new WindowInteropHelper(window);
                                         wih.Owner = outlookHwnd;
                                     }
-                                    
+
                                 }
                                 window.ShowActivated = true;
-                                
+
                                 window.ShowDialog();
-                                
+
                                 if (hasToSend)
                                 {
                                     //Cnaned on 16tdec2019
@@ -173,7 +172,7 @@ namespace OutlookPopup
                                 {
                                     Cancel = true;
                                 }
-                                
+
 
                                 break;
                             }
@@ -187,9 +186,9 @@ namespace OutlookPopup
                         }
 
                     }
-                    
+
                 }
-                else if(Item is Outlook.MeetingItem)
+                else if (Item is Outlook.MeetingItem)
                 {
                     Outlook.PropertyAccessor pa;
                     Outlook.MeetingItem aptItem;
@@ -237,17 +236,12 @@ namespace OutlookPopup
                                 }
                                 window.ShowDialog();
                                 window.Activate();
-                                if (hasToSend)
-                                {
-                                    //Cnaned on 16tdec2019
-                                    //showAttachmentPopup(mailItem.Attachments);
-                                }
 
                                 if (!hasToSend)
                                 {
                                     Cancel = true;
                                 }
-                                
+
                                 break;
                             }
                             else
@@ -260,22 +254,23 @@ namespace OutlookPopup
 
                     }
                 }
-                    
             }
-            
-            
+            else
+                Cancel = true;
         }
         private void ShwWindwLogic()
         {
             string email = OutlookPopup.Properties.Settings.Default.emailId;
             string token = OutlookPopup.Properties.Settings.Default.token;
-            bool isActive = false;
+            
             log.Info("Item Send event hooked");
             if (!isTokenValid)
             {
-                myUserControl1 = new LoginUserControl();
-                myCustomTaskPane = this.CustomTaskPanes.Add(myUserControl1, "License Check");
-                myCustomTaskPane.Visible = true;
+                hasToSend = false;
+                //myUserControl1 = new LoginUserControl();
+                //myCustomTaskPane = this.CustomTaskPanes.Add(myUserControl1, "License Check");
+                //myCustomTaskPane.Visible = true;
+                opendialog();
                 IsLicenseActive();
             }
             else
@@ -285,6 +280,7 @@ namespace OutlookPopup
                 {
                     log.Info("Valid License, Item send event will continue hooked");
                     //this.Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
+                    hasToSend = true;
                 }
                 else
                 {
@@ -292,11 +288,14 @@ namespace OutlookPopup
                     {
                         log.Info("InValid License but within Offline Limit, Item send event will continue hooked");
                         //this.Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
+                        hasToSend = true;
                     }
                     else
                     {
                         log.Info("InValid License, Item send event unhooked");
                         this.Application.ItemSend -= new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
+                        hasToSend = false;
+
                     }
 
                 }

@@ -5,11 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:OutlookPopup"
              mc:Ignorable="d" 
+        Background="Orange"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
-              Width="450"
+              Width="450" Loaded="Window_Loaded"
     Height="700">
-    <Grid>
-        <wv2:WebView2 Name="webView" Source="http://localhost:8000/#/home" 
-                      />
+    <Grid Margin="5">
+        <wv2:WebView2 Name="webView"  
+                      VerticalAlignment="Stretch"
+                      HorizontalAlignment="Stretch"/>
     </Grid>
 </Window>

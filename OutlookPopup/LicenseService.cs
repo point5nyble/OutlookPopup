@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace OutlookPopup
 {
@@ -26,11 +28,16 @@ namespace OutlookPopup
                 client.DefaultRequestHeaders.Add("x-access-token", token);
                 var response = await client.PostAsync(url, data);
                 string result = response.Content.ReadAsStringAsync().Result;
+                if (result=="No valid user found")
+                {
+                    MessageBox.Show("No License Assigned, Please contact your administrator","Outlook Popup");
+                    
+                }
             }
             return true;
         }
 
-        internal static Task<bool> HasOfflineLimitReached()
+        internal static Task<bool> HasOfflineLimitReachedAsync()
         {
             int Desc;
             //Write to file
@@ -76,10 +83,13 @@ namespace OutlookPopup
 
         internal static async Task<bool> IsTokenValid(string email, string token)
         {
-            var json = JsonSerializer.Serialize(new ClientInfo { EmailId=email, MachineName="test"});
+            var json = JsonSerializer.Serialize(new ClientInfo { EmailId=email          
+            
+            });
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-
+                
             var url = OutlookPopup.Properties.Settings.Default.ServerAddress + "api/checkLicense";
+            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Add("x-access-token", token);

@@ -25,7 +25,7 @@ namespace OutlookPopup.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8000/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://infinite-stream-05068.herokuapp.com/")]
         public string ServerAddress {
             get {
                 return ((string)(this["ServerAddress"]));

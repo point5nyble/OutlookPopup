@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="ServerAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://localhost:8000/</Value>
+      <Value Profile="(Default)">https://infinite-stream-05068.herokuapp.com/</Value>
     </Setting>
     <Setting Name="token" Type="System.String" Scope="User">
       <Value Profile="(Default)">sds</Value>
