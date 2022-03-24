@@ -16,7 +16,7 @@ namespace OutlookPopup
     {
      
 
-        public static async Task<bool> IsLicenseValidAsync(ClientInfo info, string token)
+        public static async Task<LicenseStatus> IsLicenseValidAsync(ClientInfo info, string token)
         {
 
             var json = JsonSerializer.Serialize(info);
@@ -30,11 +30,18 @@ namespace OutlookPopup
                 string result = response.Content.ReadAsStringAsync().Result;
                 if (result=="No valid user found")
                 {
-                    MessageBox.Show("No License Assigned, Please contact your administrator","Outlook Popup");
+
+                    return new LicenseStatus { Message = "No License Assigned, Please contact your administrator.", IsValid = false };
+                    
+                }
+                else if(result.Contains("License is expired"))
+                {
+                    return new LicenseStatus { Message = "License expired, Please contact your administrator.", IsValid = false };
                     
                 }
             }
-            return true;
+            return new LicenseStatus { Message = "Valid License", IsValid = true };
+            
         }
 
         internal static Task<bool> HasOfflineLimitReachedAsync()
@@ -77,7 +84,7 @@ namespace OutlookPopup
                 {
                     File.Delete(filePath);
                 }
-                return Task.FromResult(false);
+                return Task.FromResult(true);
             }
         }
 

@@ -23,6 +23,8 @@ namespace OutlookPopup
     /// </summary>
     public partial class LoginControl : Window
     {
+        private static readonly log4net.ILog log =
+                        log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public LoginControl()
         {
             InitializeComponent();
@@ -51,14 +53,15 @@ namespace OutlookPopup
                 User uDetails = JsonConvert.DeserializeObject<User>(tr.ReadToEnd());
                 if (uDetails.userCredentials==null)
                 {
-
+                    log.Info("Invalid Credentials entered, token still invalid.");
                 }
                 else
                 {
                     OutlookPopup.Properties.Settings.Default.emailId = uDetails.userCredentials.email;
                     OutlookPopup.Properties.Settings.Default.token = uDetails.token;
                     OutlookPopup.Properties.Settings.Default.Save();
-                    this.Close();
+                    log.Info("Token renewed, Login Window will be closed.");
+                    Close();
                 }
                 
                 

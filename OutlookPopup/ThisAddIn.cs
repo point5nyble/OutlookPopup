@@ -11,37 +11,30 @@ using log4net;
 using System.Windows.Interop;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Windows;
 //using Microsoft.Exchange.WebServices.Data;
 namespace OutlookPopup
 {
     public partial class ThisAddIn
     {
 
-        //ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2010_SP1);
-
         public RegValues regValues = new RegValues();
-       // private static readonly log4net.ILog log = log4net.LogManager.GetLogger(typeof(ThisAddIn));
+       
         private static readonly log4net.ILog log = 
                         log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         
         private  void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             //call license service
-           IsLicenseActive();
-           // opendiaog();
-
-            //this.Application.Startup += Application_Startup;
-
+            IsLicenseActive();
+           
             this.Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
             log4net.Config.XmlConfigurator.Configure();
             log.Info("Plugin Loaded Successfully");
 
         }
 
-        private void Application_Startup()
-        {
-            //opendiaog();
-        }
+       
         private void opendialog()
         {
             LoginControl loginwin = new LoginControl();
@@ -49,7 +42,7 @@ namespace OutlookPopup
             loginwin.ShowDialog();
         }
         bool isTokenValid=false;
-        bool isActive = false;
+        public LicenseStatus licenseStatus { get;private set; }
         bool hasOfflineLimitReached;
         private async void IsLicenseActive()
         {
@@ -66,7 +59,7 @@ namespace OutlookPopup
                 info.MachineOS = GetMachineOS();
                 info.OutlookVersion = GetOutlookVersion();
 
-                isActive = await LicenseService.IsLicenseValidAsync(info, token);
+                licenseStatus = await LicenseService.IsLicenseValidAsync(info, token);
             }
             hasOfflineLimitReached = await LicenseService.HasOfflineLimitReachedAsync();
         }
@@ -272,40 +265,45 @@ namespace OutlookPopup
             log.Info("Item Send event hooked");
             if (!isTokenValid)
             {
+                log.Info("Invalid Token, User will be asked to login.");
                 hasToSend = false;
                 //myUserControl1 = new LoginUserControl();
                 //myCustomTaskPane = this.CustomTaskPanes.Add(myUserControl1, "License Check");
                 //myCustomTaskPane.Visible = true;
                 opendialog();
+                
+            }
+            if (licenseStatus==null)
+            {
                 IsLicenseActive();
+            }
+            
+
+            if (licenseStatus.IsValid)
+            {
+                log.Info("Valid License, Item send event will continue hooked");
+                //this.Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
+                hasToSend = true;
             }
             else
             {
-
-                if (isActive)
+                if (!hasOfflineLimitReached)
                 {
-                    log.Info("Valid License, Item send event will continue hooked");
+                    log.Info("InValid License but within Offline Limit, Item send event will continue hooked");
                     //this.Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
                     hasToSend = true;
                 }
                 else
                 {
-                    if (!hasOfflineLimitReached)
-                    {
-                        log.Info("InValid License but within Offline Limit, Item send event will continue hooked");
-                        //this.Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
-                        hasToSend = true;
-                    }
-                    else
-                    {
-                        log.Info("InValid License, Item send event unhooked");
-                        this.Application.ItemSend -= new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
-                        hasToSend = false;
-
-                    }
+                    log.Info("Invalid License, Item send event unhooked");
+                    this.Application.ItemSend -= new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
+                    MessageBox.Show(licenseStatus.Message+ "\n\nSent emails will no longer be monitored.", "Outlook Popup");
+                    hasToSend = false;
 
                 }
+
             }
+           
         }
         void showAttachmentPopup(Outlook.Attachments attchments )
         {
