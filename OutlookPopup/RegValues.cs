@@ -26,6 +26,7 @@ namespace OutlookPopup
             key.SetValue("SendButttonText", "Send");
             key.SetValue("DSendButtonText", "Don't Send");
             key.SetValue("AcceptedDomains", "zepto.com.my,outlook.com,rhingle.com");
+
             key.Close();
             readRegistryKeys();
         }
@@ -44,27 +45,27 @@ namespace OutlookPopup
                         // actually accessing Wow6432Node 
                         //if it does exist, retrieve the stored values  
                    
-                            if (key != null)
-                            {
-                                //var val = key.GetValue("AttachmentPromptEnabled");
-                                log.Info("Registry key found,Reading the values" + key.ToString());
-                                AttachmentPromptEnabled = Convert.ToInt32(key.GetValue("AttachmentPromptEnabled"));
-                                ExternalRecpPromptEnabled = Convert.ToInt32(key.GetValue("ExternalRecpPromptEnabled"));
-                                AttachmentMessageTitle = key.GetValue("AttachmentMessageTitle").ToString();
-                                AttachmentMessageBody = key.GetValue("AttachmentMessageBody").ToString();
-                                ExternalRecpMessageTitle = key.GetValue("ExternalRecpMessageTitle").ToString();
-                                ExternalRecpMessageBody = key.GetValue("ExternalRecpMessageBody").ToString();
-                                SendButttonText = key.GetValue("SendButttonText").ToString();
-                                DSendButtonText = key.GetValue("DSendButttonText").ToString();
-                                AcceptedDomains = key.GetValue("AcceptedDomainList").ToString();
-                                //EndpointURL = key.GetValue("EndpointURL").ToString();
+                        if (key != null)
+                        {
+                            //var val = key.GetValue("AttachmentPromptEnabled");
+                            log.Info("Registry key found,Reading the values" + key.ToString());
+                            AttachmentPromptEnabled = Convert.ToInt32(key.GetValue("AttachmentPromptEnabled"));
+                            ExternalRecpPromptEnabled = Convert.ToInt32(key.GetValue("ExternalRecpPromptEnabled"));
+                            AttachmentMessageTitle = key.GetValue("AttachmentMessageTitle").ToString();
+                            AttachmentMessageBody = key.GetValue("AttachmentMessageBody").ToString();
+                            ExternalRecpMessageTitle = key.GetValue("ExternalRecpMessageTitle").ToString();
+                            ExternalRecpMessageBody = key.GetValue("ExternalRecpMessageBody").ToString();
+                            SendButttonText = key.GetValue("SendButttonText").ToString();
+                            DSendButtonText = key.GetValue("DSendButttonText").ToString();
+                            AcceptedDomains = key.GetValue("AcceptedDomainList").ToString();
+                            //EndpointURL = key.GetValue("EndpointURL").ToString();
+                            LicenseId = key.GetValue("SoftwareUniqueIdentifier").ToString();
                         }
-                            else
-                            {
-                           
-                                log.Info("Registry Values not found, Software\\Zepto\\OutlookMailPromp");
-                               //createRegistryKeys();
-                            }
+                        else
+                        {                           
+                            log.Info("Registry Values not found, Software\\Zepto\\OutlookMailPromp");
+                            //createRegistryKeys();
+                        }
                    
                     }
                 }
@@ -75,9 +76,7 @@ namespace OutlookPopup
                  log.Error("Exception while reading registry values.");
                  throw ex;
              }
-
-            
-            
+   
         }
         public  int AttachmentPromptEnabled { get; set; }
         public  int ExternalRecpPromptEnabled { get; set; }
@@ -93,5 +92,7 @@ namespace OutlookPopup
         public string AcceptedDomains { get; set; }
 
         public string EndpointURL { get; set; }
+
+        public string LicenseId { get; set; }
     }
 }

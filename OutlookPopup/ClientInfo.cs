@@ -16,5 +16,7 @@ namespace OutlookPopup
         [JsonPropertyName("outlook_version")]
         public string OutlookVersion { get; set; }
         //public string MachineName { get; set; }
+        [JsonPropertyName("activationId")]
+        public string ActivationId { get; set; }
     }
 }

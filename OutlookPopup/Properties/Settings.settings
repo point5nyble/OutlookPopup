@@ -9,7 +9,13 @@
       <Value Profile="(Default)">sds</Value>
     </Setting>
     <Setting Name="emailId" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">jabez@zepto.international</Value>
+    </Setting>
+    <Setting Name="SoftwareID" Type="System.String" Scope="User">
+      <Value Profile="(Default)">6236a7e22391240016042a12</Value>
+    </Setting>
+    <Setting Name="LocalServerAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://localhost:8000/</Value>
     </Setting>
   </Settings>
 </SettingsFile>

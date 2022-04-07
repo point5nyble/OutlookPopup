@@ -250,6 +250,7 @@
     </Compile>
     <Compile Include="HelperClass.cs" />
     <Compile Include="HTTPClientHelper.cs" />
+    <Compile Include="LicenseCredentials.cs" />
     <Compile Include="LicenseService.cs" />
     <Compile Include="LicenseStatus.cs" />
     <Compile Include="LoginControl.xaml.cs">

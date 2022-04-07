@@ -18,6 +18,7 @@ namespace OutlookPopup
     public partial class ThisAddIn
     {
 
+        
         public RegValues regValues = new RegValues();
        
         private static readonly log4net.ILog log = 
@@ -26,8 +27,7 @@ namespace OutlookPopup
         private  void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             //call license service
-            IsLicenseActive();
-           
+            IsLicenseActiveEx();            
             this.Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
             log4net.Config.XmlConfigurator.Configure();
             log.Info("Plugin Loaded Successfully");
@@ -35,33 +35,45 @@ namespace OutlookPopup
         }
 
        
-        private void opendialog()
-        {
-            LoginControl loginwin = new LoginControl();
-            
-            loginwin.ShowDialog();
-        }
-        bool isTokenValid=false;
+        
+        bool isTokenValid = false;
         public LicenseStatus licenseStatus { get;private set; }
         bool hasOfflineLimitReached;
-        private async void IsLicenseActive()
-        {
-            //check if email and token is valid
-            log.Info("Checking if license is Valid");
-            string email = OutlookPopup.Properties.Settings.Default.emailId;
-            string token = OutlookPopup.Properties.Settings.Default.token;
-            
-            isTokenValid = await LicenseService.IsTokenValid(email,token);
-            if (isTokenValid)
-            {
-                ClientInfo info = new ClientInfo();
-                info.EmailId = email;
-                info.MachineOS = GetMachineOS();
-                info.OutlookVersion = GetOutlookVersion();
 
-                licenseStatus = await LicenseService.IsLicenseValidAsync(info, token);
+        private async void IsLicenseActiveEx()
+        {
+            string email = Properties.Settings.Default.emailId;
+            string token = Properties.Settings.Default.token;
+            
+            isTokenValid = await LicenseService.IsTokenValid(email, token);
+            if (!isTokenValid)
+            {
+                var respose = await LicenseService.Login("jabez@zepto.international", "Jabez@123");
+                if (respose.success)
+                {
+                    Properties.Settings.Default.token = respose.token;
+                    Properties.Settings.Default.Save();
+                }
             }
-            hasOfflineLimitReached = await LicenseService.HasOfflineLimitReachedAsync();
+            // call service now to check on license
+            token = Properties.Settings.Default.token;
+            
+            //readRegistry
+            if (regValues.SendButttonText == null)
+                regValues.readRegistryKeys();
+            string licenseid = regValues.LicenseId;
+            string loggedinUserEmail = GetCurrentUserEmail();
+            var licenseResponse = await LicenseService.IsValidLicenseID(loggedinUserEmail,licenseid, token);
+            if (!licenseResponse)
+            {
+                licenseStatus = new LicenseStatus { IsValid = false, Message = "No Valid License assigned, please contact admin." };
+                hasOfflineLimitReached = await LicenseService.HasOfflineLimitReachedAsync();
+            }
+            else
+            {
+                licenseStatus = new LicenseStatus { IsValid = true, Message = "Valid License Found." };               
+            }
+                
         }
 
         private string GetOutlookVersion()
@@ -90,13 +102,53 @@ namespace OutlookPopup
 
         }
 
+        private string GetCurrentUserEmail()
+        {
+            log.Info("Get the Logged in user's Email id.");
+            Outlook.AddressEntry addrEntry =
+                Application.Session.CurrentUser.AddressEntry;
+            if (addrEntry.Type == "EX")
+            {
+                Outlook.ExchangeUser currentUser =
+                    Application.Session.CurrentUser.
+                    AddressEntry.GetExchangeUser();
+                if (currentUser != null)
+                {
+                    log.Info($"Logged in user's Email id:{currentUser.PrimarySmtpAddress}");
+                    return currentUser.PrimarySmtpAddress;
+                    //sb.AppendLine("Title: "
+                    //    + currentUser.JobTitle);
+                    //sb.AppendLine("Department: "
+                    //    + currentUser.Department);
+                    //sb.AppendLine("Location: "
+                    //    + currentUser.OfficeLocation);
+                    //sb.AppendLine("Business phone: "
+                    //    + currentUser.BusinessTelephoneNumber);
+                    //sb.AppendLine("Mobile phone: "
+                    //    + currentUser.MobileTelephoneNumber);
+                    
+                }
+                else
+                {
+                    log.Info($"Failed to get the Logged in user's Email id.Random email id will be configured as a placeholder.");
+                    return new Guid().ToString() +"@Zepto.international";
+                }
+                    
+            }
+            else
+            {
+                string email= Application.Session.CurrentUser.AddressEntry.Address;
+                log.Info($"User is no an Exchange user, user's Email id:{email}");
+                return email;
+            }
+                
+        }
+
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
             this.Application.ItemSend -= new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
         }
 
-        
-        
         public bool hasToSend=false;
 
         //private LoginUserControl myUserControl1;
@@ -105,8 +157,8 @@ namespace OutlookPopup
         const string PR_SMTP_ADDRESS = "http://schemas.microsoft.com/mapi/proptag/0x39FE001E";
         public void Item_Send(object Item, ref bool Cancel)
         {
-            ShwWindwLogic();
-            if  (regValues.SendButttonText==null)
+            HookUnhookItemSendEvent();
+            if (regValues.SendButttonText==null)
                 regValues.readRegistryKeys();
 
             if (regValues.ExternalRecpPromptEnabled == 1)
@@ -257,28 +309,16 @@ namespace OutlookPopup
             else
                 Cancel = true;
         }
-        private void ShwWindwLogic()
+        private void HookUnhookItemSendEvent()
         {
-            string email = OutlookPopup.Properties.Settings.Default.emailId;
-            string token = OutlookPopup.Properties.Settings.Default.token;
-            
+                        
             log.Info("Item Send event hooked");
-            if (!isTokenValid)
+           
+            if (licenseStatus == null)
             {
-                log.Info("Invalid Token, User will be asked to login.");
-                hasToSend = false;
-                //myUserControl1 = new LoginUserControl();
-                //myCustomTaskPane = this.CustomTaskPanes.Add(myUserControl1, "License Check");
-                //myCustomTaskPane.Visible = true;
-                opendialog();
-                
-            }
-            if (licenseStatus==null)
-            {
-                IsLicenseActive();
+                IsLicenseActiveEx();
             }
             
-
             if (licenseStatus.IsValid)
             {
                 log.Info("Valid License, Item send event will continue hooked");
@@ -412,6 +452,7 @@ namespace OutlookPopup
                 #endregion
             }
         }
+
         #region VSTO generated code
 
         /// <summary>

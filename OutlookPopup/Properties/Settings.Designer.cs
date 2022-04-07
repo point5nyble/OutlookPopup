@@ -49,13 +49,37 @@ namespace OutlookPopup.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("jabez@zepto.international")]
         public string emailId {
             get {
                 return ((string)(this["emailId"]));
             }
             set {
                 this["emailId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("6236a7e22391240016042a12")]
+        public string SoftwareID {
+            get {
+                return ((string)(this["SoftwareID"]));
+            }
+            set {
+                this["SoftwareID"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8000/")]
+        public string LocalServerAddress {
+            get {
+                return ((string)(this["LocalServerAddress"]));
+            }
+            set {
+                this["LocalServerAddress"] = value;
             }
         }
     }
