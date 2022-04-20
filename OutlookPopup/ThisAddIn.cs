@@ -62,6 +62,11 @@ namespace OutlookPopup
             if (regValues.SendButttonText == null)
                 regValues.readRegistryKeys();
             string licenseid = regValues.LicenseId;
+            if (licenseid==null)
+            {
+                licenseStatus = new LicenseStatus { IsValid = false, Message = "No Valid License assigned, registry missing." };
+                return;
+            }
             string loggedinUserEmail = GetCurrentUserEmail();
             var licenseResponse = await LicenseService.IsValidLicenseID(loggedinUserEmail,licenseid, token);
             if (!licenseResponse)

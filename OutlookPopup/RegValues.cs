@@ -74,7 +74,7 @@ namespace OutlookPopup
              catch (Exception ex)
              {
                  log.Error("Exception while reading registry values.");
-                 throw ex;
+                 //throw ex;
              }
    
         }
