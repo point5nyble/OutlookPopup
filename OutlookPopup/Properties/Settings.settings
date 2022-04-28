@@ -17,5 +17,11 @@
     <Setting Name="LocalServerAddress" Type="System.String" Scope="User">
       <Value Profile="(Default)">http://localhost:8000/</Value>
     </Setting>
+    <Setting Name="OfflineLimit" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">7</Value>
+    </Setting>
+    <Setting Name="LastUpdated" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2022-08-28</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

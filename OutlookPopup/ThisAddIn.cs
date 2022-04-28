@@ -18,33 +18,33 @@ namespace OutlookPopup
     public partial class ThisAddIn
     {
 
-        
+
         public RegValues regValues = new RegValues();
-       
-        private static readonly log4net.ILog log = 
+
+        private static readonly log4net.ILog log =
                         log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        
-        private  void ThisAddIn_Startup(object sender, System.EventArgs e)
+
+        private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             //call license service
-            IsLicenseActiveEx();            
+            IsLicenseActiveEx();
             this.Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
             log4net.Config.XmlConfigurator.Configure();
             log.Info("Plugin Loaded Successfully");
 
         }
 
-       
-        
+
+
         bool isTokenValid = false;
-        public LicenseStatus licenseStatus { get;private set; }
+        public LicenseStatus licenseStatus { get; private set; }
         bool hasOfflineLimitReached;
 
         private async void IsLicenseActiveEx()
         {
             string email = Properties.Settings.Default.emailId;
             string token = Properties.Settings.Default.token;
-            
+
             isTokenValid = await LicenseService.IsTokenValid(email, token);
             if (!isTokenValid)
             {
@@ -57,18 +57,18 @@ namespace OutlookPopup
             }
             // call service now to check on license
             token = Properties.Settings.Default.token;
-            
+
             //readRegistry
             if (regValues.SendButttonText == null)
                 regValues.readRegistryKeys();
             string licenseid = regValues.LicenseId;
-            if (licenseid==null)
+            if (licenseid == null)
             {
                 licenseStatus = new LicenseStatus { IsValid = false, Message = "No Valid License assigned, registry missing." };
                 return;
             }
             string loggedinUserEmail = GetCurrentUserEmail();
-            var licenseResponse = await LicenseService.IsValidLicenseID(loggedinUserEmail,licenseid, token);
+            var licenseResponse = await LicenseService.IsValidLicenseID(loggedinUserEmail, licenseid, token);
             if (!licenseResponse)
             {
                 licenseStatus = new LicenseStatus { IsValid = false, Message = "No Valid License assigned, please contact admin." };
@@ -76,37 +76,13 @@ namespace OutlookPopup
             }
             else
             {
-                licenseStatus = new LicenseStatus { IsValid = true, Message = "Valid License Found." };               
-            }
+                licenseStatus = new LicenseStatus { IsValid = true, Message = "Valid License Found." };
                 
-        }
-
-        private string GetOutlookVersion()
-        {
-            return Globals.ThisAddIn.Application.Version;
-        }
-
-        private string GetMachineOS()
-        {
-            OperatingSystem os = Environment.OSVersion;
-
-            if (os.Version.Major > 6)
-            {
-                return "Win 10";
             }
-            else if (os.Version.Minor == 2)
-            {
-                return "Win 8/8.1";
-            }
-            else if (os.Version.Minor == 1)
-            {
-                return "Win 7";
-            }
-            else
-                return "Lower than Win 7";
 
         }
-
+        public string activationId { get; set; }
+       
         private string GetCurrentUserEmail()
         {
             log.Info("Get the Logged in user's Email id.");
@@ -155,7 +131,7 @@ namespace OutlookPopup
         }
 
         public bool hasToSend=false;
-
+        private bool hasValidLicense = false;
         //private LoginUserControl myUserControl1;
         //private Microsoft.Office.Tools.CustomTaskPane myCustomTaskPane;
 
@@ -165,154 +141,146 @@ namespace OutlookPopup
             HookUnhookItemSendEvent();
             if (regValues.SendButttonText==null)
                 regValues.readRegistryKeys();
-
-            if (regValues.ExternalRecpPromptEnabled == 1)
+            if (hasValidLicense)
             {
-                if (Item is Outlook.MailItem)
+                if (regValues.ExternalRecpPromptEnabled == 1)
                 {
-                    Outlook.PropertyAccessor pa;
-                    Outlook.MailItem mailItem;
-                    mailItem = Item as Outlook.MailItem;
-                    foreach (Outlook.Recipient recp in mailItem.Recipients)
+                    if (Item is Outlook.MailItem)
                     {
-
-                        Outlook.AddressEntry addEntry = recp.AddressEntry;
-                        pa = recp.PropertyAccessor;
-                        //if (addEntry.AddressEntryUserType != Outlook.OlAddressEntryUserType.olExchangeUserAddressEntry)
-                        try
+                        Outlook.PropertyAccessor pa;
+                        Outlook.MailItem mailItem;
+                        mailItem = Item as Outlook.MailItem;
+                        foreach (Outlook.Recipient recp in mailItem.Recipients)
                         {
-                            //var domain = addEntry.Address.Split('@');
-                            string domain = (string)pa.GetProperty(PR_SMTP_ADDRESS);
 
-                            if (!regValues.AcceptedDomains.Contains(domain.Split('@')[1]))
+                            Outlook.AddressEntry addEntry = recp.AddressEntry;
+                            pa = recp.PropertyAccessor;
+                            //if (addEntry.AddressEntryUserType != Outlook.OlAddressEntryUserType.olExchangeUserAddressEntry)
+                            try
                             {
-                                //initialize logging
+                                //var domain = addEntry.Address.Split('@');
+                                string domain = (string)pa.GetProperty(PR_SMTP_ADDRESS);
 
-                                log.Info("Plugin was Loaded Successfully and Recipient list contains external  user.");
-
-                                log.Info("Registry Values read");
-
-                                log.Info("External User found,Warning Window should be shown");
-                                WarningMessage window = new WarningMessage();
-
-                                //Set Popup as child of the active window of Outlook
-                                Outlook.Inspector activeWindow = Globals.ThisAddIn.Application.ActiveWindow() as Outlook.Inspector;
-                                if (activeWindow != null)
+                                if (!regValues.AcceptedDomains.Contains(domain.Split('@')[1]))
                                 {
-                                    IntPtr outlookHwnd = new OfficeWin32Window(activeWindow).Handle;
-                                    WindowInteropHelper wih = new WindowInteropHelper(window);
-                                    wih.Owner = outlookHwnd;
-                                }
-                                else
-                                {
-                                    Outlook.Explorer activeExplorer = Globals.ThisAddIn.Application.ActiveWindow() as Outlook.Explorer;
-                                    if (activeExplorer != null)
+                                    //initialize logging
+
+                                    log.Info("Plugin was Loaded Successfully and Recipient list contains external  user.");
+
+                                    log.Info("Registry Values read");
+
+                                    log.Info("External User found,Warning Window should be shown");
+                                    WarningMessage window = new WarningMessage();
+
+                                    //Set Popup as child of the active window of Outlook
+                                    Outlook.Inspector activeWindow = Globals.ThisAddIn.Application.ActiveWindow() as Outlook.Inspector;
+                                    if (activeWindow != null)
                                     {
-                                        IntPtr outlookHwnd = new OfficeWin32Window(activeExplorer).Handle;
+                                        IntPtr outlookHwnd = new OfficeWin32Window(activeWindow).Handle;
                                         WindowInteropHelper wih = new WindowInteropHelper(window);
                                         wih.Owner = outlookHwnd;
                                     }
+                                    else
+                                    {
+                                        Outlook.Explorer activeExplorer = Globals.ThisAddIn.Application.ActiveWindow() as Outlook.Explorer;
+                                        if (activeExplorer != null)
+                                        {
+                                            IntPtr outlookHwnd = new OfficeWin32Window(activeExplorer).Handle;
+                                            WindowInteropHelper wih = new WindowInteropHelper(window);
+                                            wih.Owner = outlookHwnd;
+                                        }
 
+                                    }
+                                    window.ShowActivated = true;
+
+                                    window.ShowDialog();
+                                    if (!hasToSend)
+                                    {
+                                        Cancel = true;
+                                    }
+                                    break;
                                 }
-                                window.ShowActivated = true;
-
-                                window.ShowDialog();
-
-                                if (hasToSend)
-                                {
-                                    //Cnaned on 16tdec2019
-                                    //showAttachmentPopup(mailItem.Attachments);
-                                }
-
-                                if (!hasToSend)
-                                {
-                                    Cancel = true;
-                                }
-
-
-                                break;
+                                else
+                                    log.Info(domain + " User is not an external user.No Popup be Shown");
                             }
-                            else
-                                log.Info(domain + " User is not an external user.");
-                        }
-                        catch (Exception ex)
-                        {
+                            catch (Exception ex)
+                            {
 
-                            log.Fatal(ex.Message + "Some Registry Values/Keys missing.");
+                                log.Fatal(ex.Message + "Some Registry Values/Keys missing.");
+                            }
+
                         }
 
                     }
-
-                }
-                else if (Item is Outlook.MeetingItem)
-                {
-                    Outlook.PropertyAccessor pa;
-                    Outlook.MeetingItem aptItem;
-                    aptItem = Item as Outlook.MeetingItem;
-                    foreach (Outlook.Recipient recp in aptItem.Recipients)
+                    else if (Item is Outlook.MeetingItem)
                     {
-
-                        Outlook.AddressEntry addEntry = recp.AddressEntry;
-                        pa = recp.PropertyAccessor;
-                        //if (addEntry.AddressEntryUserType != Outlook.OlAddressEntryUserType.olExchangeUserAddressEntry)
-                        try
+                        Outlook.PropertyAccessor pa;
+                        Outlook.MeetingItem aptItem;
+                        aptItem = Item as Outlook.MeetingItem;
+                        foreach (Outlook.Recipient recp in aptItem.Recipients)
                         {
-                            //var domain = addEntry.Address.Split('@');
-                            string domain = (string)pa.GetProperty(PR_SMTP_ADDRESS);
 
-                            if (!regValues.AcceptedDomains.Contains(domain.Split('@')[1]))
+                            Outlook.AddressEntry addEntry = recp.AddressEntry;
+                            pa = recp.PropertyAccessor;
+                            //if (addEntry.AddressEntryUserType != Outlook.OlAddressEntryUserType.olExchangeUserAddressEntry)
+                            try
                             {
-                                //initialize logging
+                                //var domain = addEntry.Address.Split('@');
+                                string domain = (string)pa.GetProperty(PR_SMTP_ADDRESS);
 
-                                log.Info("Plugin was Loaded Successfully and Recipient list contains external  user.");
-
-                                log.Info("Registry Values read");
-
-                                log.Info("External User found,Warning Window should be shown");
-                                WarningMessage window = new WarningMessage();
-                                //Alert window = new Alert();
-                                //Set Popup as child of the active window of Outlook
-                                Outlook.Inspector activeWindow = Globals.ThisAddIn.Application.ActiveWindow() as Outlook.Inspector;
-                                if (activeWindow != null)
+                                if (!regValues.AcceptedDomains.Contains(domain.Split('@')[1]))
                                 {
-                                    IntPtr outlookHwnd = new OfficeWin32Window(activeWindow).Handle;
-                                    WindowInteropHelper wih = new WindowInteropHelper(window);
-                                    wih.Owner = outlookHwnd;
-                                }
-                                else
-                                {
-                                    Outlook.Explorer activeExplorer = Globals.ThisAddIn.Application.ActiveWindow() as Outlook.Explorer;
-                                    if (activeExplorer != null)
+                                    //initialize logging
+
+                                    log.Info("Plugin was Loaded Successfully and Recipient list contains external  user.");
+
+                                    log.Info("Registry Values read");
+
+                                    log.Info("External User found,Warning Window should be shown");
+                                    WarningMessage window = new WarningMessage();
+                                    //Alert window = new Alert();
+                                    //Set Popup as child of the active window of Outlook
+                                    Outlook.Inspector activeWindow = Globals.ThisAddIn.Application.ActiveWindow() as Outlook.Inspector;
+                                    if (activeWindow != null)
                                     {
-                                        IntPtr outlookHwnd = new OfficeWin32Window(activeExplorer).Handle;
+                                        IntPtr outlookHwnd = new OfficeWin32Window(activeWindow).Handle;
                                         WindowInteropHelper wih = new WindowInteropHelper(window);
                                         wih.Owner = outlookHwnd;
                                     }
+                                    else
+                                    {
+                                        Outlook.Explorer activeExplorer = Globals.ThisAddIn.Application.ActiveWindow() as Outlook.Explorer;
+                                        if (activeExplorer != null)
+                                        {
+                                            IntPtr outlookHwnd = new OfficeWin32Window(activeExplorer).Handle;
+                                            WindowInteropHelper wih = new WindowInteropHelper(window);
+                                            wih.Owner = outlookHwnd;
+                                        }
 
+                                    }
+                                    window.ShowDialog();
+                                    window.Activate();
+                                    if (!hasToSend)
+                                    {
+                                        Cancel = true;
+                                    }
+                                    break;
                                 }
-                                window.ShowDialog();
-                                window.Activate();
-
-                                if (!hasToSend)
-                                {
-                                    Cancel = true;
-                                }
-
-                                break;
+                                else
+                                    log.Info(domain + " User is not an external user. No popup shown.");
                             }
-                            else
-                                log.Info(domain + " User is not an external user.");
-                        }
-                        catch (Exception ex)
-                        {
-                            log.Fatal(ex.Message + "Some Registry Values/Keys missing.");
-                        }
+                            catch (Exception ex)
+                            {
+                                log.Fatal(ex.Message + "Some Registry Values/Keys missing.");
+                            }
 
+                        }
                     }
                 }
+                else
+                    Cancel = true;
             }
-            else
-                Cancel = true;
+            
         }
         private void HookUnhookItemSendEvent()
         {
@@ -328,7 +296,7 @@ namespace OutlookPopup
             {
                 log.Info("Valid License, Item send event will continue hooked");
                 //this.Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
-                hasToSend = true;
+                hasValidLicense = true;
             }
             else
             {
@@ -336,14 +304,14 @@ namespace OutlookPopup
                 {
                     log.Info("InValid License but within Offline Limit, Item send event will continue hooked");
                     //this.Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
-                    hasToSend = true;
+                    hasValidLicense = true;
                 }
                 else
                 {
                     log.Info("Invalid License, Item send event unhooked");
-                    this.Application.ItemSend -= new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
+                    //this.Application.ItemSend -= new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
                     MessageBox.Show(licenseStatus.Message+ "\n\nSent emails will no longer be monitored.", "Outlook Popup");
-                    hasToSend = false;
+                    hasValidLicense = false;
 
                 }
 

@@ -82,5 +82,29 @@ namespace OutlookPopup.Properties {
                 this["LocalServerAddress"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("7")]
+        public int OfflineLimit {
+            get {
+                return ((int)(this["OfflineLimit"]));
+            }
+            set {
+                this["OfflineLimit"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2022-08-28")]
+        public global::System.DateTime LastUpdated {
+            get {
+                return ((global::System.DateTime)(this["LastUpdated"]));
+            }
+            set {
+                this["LastUpdated"] = value;
+            }
+        }
     }
 }

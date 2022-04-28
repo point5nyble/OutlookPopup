@@ -24,7 +24,7 @@ namespace OutlookPopup
         }
         private static readonly log4net.ILog log =
                log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        public static async Task<LicenseStatus> IsLicenseValidAsync(ClientInfo info, string token)
+        public static async Task<LicenseStatus> LogLicenseUsage(ClientInfo info, string token)
         {
 
             var json = JsonSerializer.Serialize(info);
@@ -55,50 +55,36 @@ namespace OutlookPopup
         internal static Task<bool> HasOfflineLimitReachedAsync()
         {
             log.Info("Checking if Offline Limit has reached");
-            int Desc;
-            //Write to file
-            string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "OfflineTracker.dat");
-
-            InternetGetConnectedState(out Desc, 0);
-            if (Desc==0)
+            int daysLeft = Properties.Settings.Default.OfflineLimit;
+            DateTime lastUpdated = Properties.Settings.Default.LastUpdated;
+            if (daysLeft == 0)
             {
-                
-                string content = string.Empty;
-                if (!File.Exists(filePath))
-                {
-                    File.Create(filePath);
-                }
-                using (StreamReader outFile=new StreamReader(filePath))
-                {
-                    content = outFile.ReadLine();
-                }
-                if (content.Length == 30)
-                {
-                    log.Info("Offline limit breached.");
-                    return Task.FromResult(true);
-                    
-                }
-                else
-                {
-                    using (StreamWriter outputFile = new StreamWriter(filePath))
-                    {
-                        outputFile.WriteLineAsync(content+'F');
-                    }
-                    log.Info("Within Offline limit.");
-                    return Task.FromResult(false);
-                }
+                log.Info("Offline limit Reached.");
+                return Task.FromResult(true);                 
             }
             else
             {
-                if (File.Exists(filePath))
+                if ((DateTime.Today - lastUpdated).TotalDays != 0)
                 {
-                    File.Delete(filePath);
+                    Properties.Settings.Default.OfflineLimit = daysLeft - 1;
+                    Properties.Settings.Default.LastUpdated = DateTime.Today;
+                    Properties.Settings.Default.Save();
+                    log.Info($"Within Offline limit.{daysLeft} left in offline expiration.");
+                    
                 }
-                return Task.FromResult(true);
-            }
+                return Task.FromResult(false);
+            }          
         }
 
+        internal static void clearOfflineLimitInfo()
+        {
+            string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "OfflineTracker.dat");
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+        }
         internal static async Task<bool> IsTokenValid(string email, string token)
         {
             log.Info("Checking if token is valid.");
@@ -225,6 +211,8 @@ namespace OutlookPopup
                 if (response.IsSuccessStatusCode)
                 {
                     log.Info($"License activation for the user {loggedinUserEmailId} successful.");
+                    //Log License Usage
+                    LogUsage(loggedinUserEmailId, guid.ToString(), token);
                     return true;
                 }
                 else
@@ -235,6 +223,43 @@ namespace OutlookPopup
                 }
                     
             }
+        }
+
+        private static async void LogUsage(string userEmail,string activationId,string token)
+        {
+            //Log the license Usage.
+            ClientInfo client = new ClientInfo();
+            client.EmailId = userEmail;
+            client.MachineOS = GetMachineOS();
+            client.ActivationId = activationId;
+            client.OutlookVersion = GetOutlookVersion();
+            await LicenseService.LogLicenseUsage(client, token);
+        }
+
+        private static string GetOutlookVersion()
+        {
+            return Globals.ThisAddIn.Application.Version;
+        }
+
+        private static string GetMachineOS()
+        {
+            OperatingSystem os = Environment.OSVersion;
+
+            if (os.Version.Major > 6)
+            {
+                return "Win 10";
+            }
+            else if (os.Version.Minor == 2)
+            {
+                return "Win 8/8.1";
+            }
+            else if (os.Version.Minor == 1)
+            {
+                return "Win 7";
+            }
+            else
+                return "Lower than Win 7";
+
         }
 
         [DllImport("wininet.dll")]
