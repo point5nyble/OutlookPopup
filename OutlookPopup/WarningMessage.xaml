@@ -30,14 +30,14 @@
             <TextBlock  Grid.Column="1" FontWeight="Bold" FontSize="16"
                        Margin="-5,10,20,10" 
                        TextWrapping="Wrap"                      
-                       >
-                <Run Text="This email will be sent to an external party."/>
+                       Text="{Binding ExternalRecpMessageBody}">
+                <!--<Run Text="This email will be sent to an external party."/>
                 <LineBreak/>
                 
                 <Run  Text="Please validate the intended recipient(s) ensure this email comply with the Group Data Governance Policy."/>
                 
                 <LineBreak/>
-                <Run Text="Do you want to proceed?"/>
+                <Run Text="Do you want to proceed?"/>-->
                 
             </TextBlock>
         </Grid>
