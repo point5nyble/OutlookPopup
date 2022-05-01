@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32106.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutlookPopup", "OutlookPopup\OutlookPopup.csproj", "{EB46F207-7430-4066-A8B3-236D4DE6184B}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "OutlookPopupInstaller", "OutlookPopupInstaller\OutlookPopupInstaller.wixproj", "{1106605D-AAE2-46A9-BC7F-F0AD2BCF1084}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "OutlookAddinInstaller", "OutlookAddinInstaller\OutlookAddinInstaller.vdproj", "{94D646A2-9E2D-410A-AF1C-1BC21BED10D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,8 +31,19 @@ Global
 		{1106605D-AAE2-46A9-BC7F-F0AD2BCF1084}.Release|Any CPU.ActiveCfg = Release|x86
 		{1106605D-AAE2-46A9-BC7F-F0AD2BCF1084}.Release|x86.ActiveCfg = Release|x86
 		{1106605D-AAE2-46A9-BC7F-F0AD2BCF1084}.Release|x86.Build.0 = Release|x86
+		{94D646A2-9E2D-410A-AF1C-1BC21BED10D3}.Debug|Any CPU.ActiveCfg = Debug
+		{94D646A2-9E2D-410A-AF1C-1BC21BED10D3}.Debug|Any CPU.Build.0 = Debug
+		{94D646A2-9E2D-410A-AF1C-1BC21BED10D3}.Debug|x86.ActiveCfg = Debug
+		{94D646A2-9E2D-410A-AF1C-1BC21BED10D3}.Debug|x86.Build.0 = Debug
+		{94D646A2-9E2D-410A-AF1C-1BC21BED10D3}.Release|Any CPU.ActiveCfg = Release
+		{94D646A2-9E2D-410A-AF1C-1BC21BED10D3}.Release|Any CPU.Build.0 = Release
+		{94D646A2-9E2D-410A-AF1C-1BC21BED10D3}.Release|x86.ActiveCfg = Release
+		{94D646A2-9E2D-410A-AF1C-1BC21BED10D3}.Release|x86.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BDE445CD-366A-4A07-9483-3A4E93965898}
 	EndGlobalSection
 EndGlobal
