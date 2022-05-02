@@ -751,7 +751,7 @@
         {
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_202D0AB0E3374EEE81494B798B33BF4B"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
+            "DefaultLocation" = "8:[ProgramFiles64Folder][Manufacturer]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -799,16 +799,16 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:OutlookAddinInstaller"
-        "ProductCode" = "8:{5F18D680-65B3-4010-9C29-21F87EB67060}"
-        "PackageCode" = "8:{65F03A93-F74B-43C2-9A55-D48EFC3354D8}"
-        "UpgradeCode" = "8:{B71D0236-F565-48F2-A810-BFCBAF8686C4}"
+        "ProductCode" = "8:{D67F1F30-DACD-4724-ACA7-DC0A034A625D}"
+        "PackageCode" = "8:{BE8EAA8F-6796-4B24-A53E-1531610871D4}"
+        "UpgradeCode" = "8:{D37CB28A-9EF9-4A23-B1CC-7DD29D53EE13}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.2"
-        "Manufacturer" = "8:Zepto"
+        "ProductVersion" = "8:1.0.3"
+        "Manufacturer" = "8:CTC"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:OutlookAddinInstaller"
@@ -821,7 +821,7 @@
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
-        "TargetPlatform" = "3:0"
+        "TargetPlatform" = "3:1"
         "PreBuildEvent" = "8:"
         "PostBuildEvent" = "8:"
         "RunPostBuildEvent" = "3:0"
@@ -879,7 +879,7 @@
                                                         {
                                                             "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_9D9411D6233A43C4B1D2347CCA6EFBCC"
                                                             {
-                                                            "Name" = "8:Zepto.OutlookPopup"
+                                                            "Name" = "8:OutlookPopup"
                                                             "Condition" = "8:"
                                                             "AlwaysCreate" = "11:FALSE"
                                                             "DeleteAtUninstall" = "11:FALSE"
@@ -945,7 +945,7 @@
                             }
                             "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_3342B72D8EC3496F94D97793884CB699"
                             {
-                            "Name" = "8:Zepto"
+                            "Name" = "8:CTC"
                             "Condition" = "8:"
                             "AlwaysCreate" = "11:FALSE"
                             "DeleteAtUninstall" = "11:FALSE"
@@ -954,7 +954,7 @@
                                 {
                                     "{60EA8692-D2D5-43EB-80DC-7906BF13D6EF}:_71233CCD865B43D49B11AD4322A27CB9"
                                     {
-                                    "Name" = "8:OutlookMailPrompt"
+                                    "Name" = "8:Outlook_ExternalPrompt"
                                     "Condition" = "8:"
                                     "AlwaysCreate" = "11:FALSE"
                                     "DeleteAtUninstall" = "11:FALSE"

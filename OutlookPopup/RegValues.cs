@@ -33,49 +33,49 @@ namespace OutlookPopup
         public void readRegistryKeys()
         {
 
-           // Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software\\CTC\\Outlook_ExternalPrompt");
-             try
-             {
+             //Microsoft.Win32.RegistryKey key1 = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("Software\\CTC\\Outlook_ExternalPrompt");
+            try
+            {
 
-                using (var view32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,
-                                                RegistryView.Registry32))
+            using (var view32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,
+                                            RegistryView.Default))
+            {
+                using (var key = view32.OpenSubKey("Software\\CTC\\Outlook_ExternalPrompt", false))
                 {
-                    using (var key = view32.OpenSubKey("Software\\CTC\\Outlook_ExternalPrompt", false))
+                    // actually accessing Wow6432Node 
+                    //if it does exist, retrieve the stored values  
+                   
+                    if (key != null)
                     {
-                        // actually accessing Wow6432Node 
-                        //if it does exist, retrieve the stored values  
-                   
-                            if (key != null)
-                            {
-                                //var val = key.GetValue("AttachmentPromptEnabled");
-                                log.Info("Registry key found,Reading the values" + key.ToString());
-                                AttachmentPromptEnabled = Convert.ToInt32(key.GetValue("AttachmentPromptEnabled"));
-                                ExternalRecpPromptEnabled = Convert.ToInt32(key.GetValue("ExternalRecpPromptEnabled"));
-                                AttachmentMessageTitle = key.GetValue("AttachmentMessageTitle").ToString();
-                                AttachmentMessageBody = key.GetValue("AttachmentMessageBody").ToString();
-                                ExternalRecpMessageTitle = key.GetValue("ExternalRecpMessageTitle").ToString();
-                                ExternalRecpMessageBody = key.GetValue("ExternalRecpMessageBody").ToString();
-                                SendButttonText = key.GetValue("SendButttonText").ToString();
-                                DSendButtonText = key.GetValue("DSendButttonText").ToString();
-                                AcceptedDomains = key.GetValue("AcceptedDomainList").ToString();
+                        //var val = key.GetValue("AttachmentPromptEnabled");
+                        log.Info("Registry key found,Reading the values" + key.ToString());
+                        AttachmentPromptEnabled = Convert.ToInt32(key.GetValue("AttachmentPromptEnabled"));
+                        ExternalRecpPromptEnabled = Convert.ToInt32(key.GetValue("ExternalRecpPromptEnabled"));
+                        AttachmentMessageTitle = key.GetValue("AttachmentMessageTitle").ToString();
+                        AttachmentMessageBody = key.GetValue("AttachmentMessageBody").ToString();
+                        ExternalRecpMessageTitle = key.GetValue("ExternalRecpMessageTitle").ToString();
+                        ExternalRecpMessageBody = key.GetValue("ExternalRecpMessageBody").ToString();
+                        SendButttonText = key.GetValue("SendButttonText").ToString();
+                        DSendButtonText = key.GetValue("DSendButttonText").ToString();
+                        AcceptedDomains = key.GetValue("AcceptedDomainList").ToString();
                            
-                            }
-                            else
-                            {
-                           
-                                log.Info("Registry Values not found" + key.ToString());
-                                //createRegistryKeys();
-                            }
-                   
                     }
-                }
+                    else
+                    {
+                           
+                        log.Info("Registry Values not found" );
+                        //createRegistryKeys();
+                    }
                    
-             }
-             catch (Exception ex)
-             {
-                 log.Error("Exception while reading registry values.");
-                 throw ex;
-             }
+                }
+            }
+                   
+            }
+        catch (Exception ex)
+            {
+                log.Error("Exception while reading registry values.");
+                throw ex;
+            }
 
             
             
