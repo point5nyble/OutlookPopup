@@ -58,7 +58,9 @@ namespace OutlookPopup
                         SendButttonText = key.GetValue("SendButttonText").ToString();
                         DSendButtonText = key.GetValue("DSendButttonText").ToString();
                         AcceptedDomains = key.GetValue("AcceptedDomainList").ToString();
-                           
+                        
+
+
                     }
                     else
                     {
@@ -85,7 +87,7 @@ namespace OutlookPopup
         public  string AttachmentMessageTitle { get; set; }
         public  string AttachmentMessageBody { get; set; }
         public  string ExternalRecpMessageTitle { get; set; }
-
+        public string ExpiredLicenseMessage { get; set; }
         public   string ExternalRecpMessageBody { get; set; }
 
         public  string SendButttonText { get; set; }
