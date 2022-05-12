@@ -60,7 +60,7 @@ namespace OutlookPopup
             if (daysLeft == 0)
             {
                 log.Info("Offline limit Reached.");
-                return Task.FromResult(true);                 
+                return Task.FromResult(true);
             }
             else
             {
@@ -70,10 +70,10 @@ namespace OutlookPopup
                     Properties.Settings.Default.LastUpdated = DateTime.Today;
                     Properties.Settings.Default.Save();
                     log.Info($"Within Offline limit.{daysLeft} left in offline expiration.");
-                    
                 }
+                log.Info($"Within Offline limit.{daysLeft} left in offline expiration.");
                 return Task.FromResult(false);
-            }          
+            }
         }
 
         internal static void clearOfflineLimitInfo()

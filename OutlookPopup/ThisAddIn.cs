@@ -38,7 +38,7 @@ namespace OutlookPopup
 
         bool isTokenValid = false;
         public LicenseStatus licenseStatus { get; private set; }
-        bool hasOfflineLimitReached;
+        bool hasOfflineLimitReached = true;
 
         private async void IsLicenseActiveEx()
         {
@@ -65,6 +65,7 @@ namespace OutlookPopup
             if (licenseid == null)
             {
                 licenseStatus = new LicenseStatus { IsValid = false, Message = "No Valid License assigned, registry missing." };
+                hasOfflineLimitReached = await LicenseService.HasOfflineLimitReachedAsync();
                 return;
             }
             string loggedinUserEmail = GetCurrentUserEmail();
@@ -73,11 +74,11 @@ namespace OutlookPopup
             {
                 licenseStatus = new LicenseStatus { IsValid = false, Message = "No Valid License assigned, please contact admin." };
                 hasOfflineLimitReached = await LicenseService.HasOfflineLimitReachedAsync();
+
             }
             else
             {
-                licenseStatus = new LicenseStatus { IsValid = true, Message = "Valid License Found." };
-                
+                licenseStatus = new LicenseStatus { IsValid = true, Message = "Valid License Found." };                
             }
 
         }
@@ -302,15 +303,15 @@ namespace OutlookPopup
             {
                 if (!hasOfflineLimitReached)
                 {
-                    log.Info("InValid License but within Offline Limit, Item send event will continue hooked");
+                    log.Info("InValid License but within Offline Limit, Sent emails will be monitored");
                     //this.Application.ItemSend += new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
                     hasValidLicense = true;
                 }
                 else
                 {
-                    log.Info("Invalid License, Item send event unhooked");
+                    log.Info("Invalid License.Sent emails will no longer be monitored");
                     //this.Application.ItemSend -= new Outlook.ApplicationEvents_11_ItemSendEventHandler(Item_Send);
-                    MessageBox.Show(licenseStatus.Message+ "\n\nSent emails will no longer be monitored.", "Outlook Popup");
+                    MessageBox.Show(regValues.ExpiredLicenseMessage, regValues.ExpiredLicensePopupHeader);
                     hasValidLicense = false;
 
                 }

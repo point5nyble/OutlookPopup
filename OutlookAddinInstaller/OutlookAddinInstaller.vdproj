@@ -1503,15 +1503,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:OutlookAddinInstaller"
-        "ProductCode" = "8:{5F18D680-65B3-4010-9C29-21F87EB67060}"
-        "PackageCode" = "8:{507ED19D-28F7-4FA4-9224-BB37D6F0B256}"
+        "ProductCode" = "8:{0FFE7912-254B-4B32-B1CD-1EC28D1A0D19}"
+        "PackageCode" = "8:{3498FFD9-2220-46D5-9FF4-4BAF2945E1B8}"
         "UpgradeCode" = "8:{B71D0236-F565-48F2-A810-BFCBAF8686C4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.2"
+        "ProductVersion" = "8:1.0.4"
         "Manufacturer" = "8:Zepto"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1700,6 +1700,14 @@
                                             "ValueTypes" = "3:1"
                                             "Value" = "8:Don't Send"
                                             }
+                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_654693077C8E445394B6624451ABEB65"
+                                            {
+                                            "Name" = "8:ExpiredLicenseMessageBody"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "ValueTypes" = "3:1"
+                                            "Value" = "8:License has expired and beyond offline limit, please connect with Admin."
+                                            }
                                             "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_6F96CF1CE413494BADF8188B03EBA13B"
                                             {
                                             "Name" = "8:AttachmentMessageTitle"
@@ -1731,6 +1739,22 @@
                                             "Transitive" = "11:FALSE"
                                             "ValueTypes" = "3:1"
                                             "Value" = "8:Send"
+                                            }
+                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_DA5A8EF67D7E459EBAA7B1CCA6184A33"
+                                            {
+                                            "Name" = "8:ExpiredLicensePopupHeader"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "ValueTypes" = "3:1"
+                                            "Value" = "8:Outlook Popup"
+                                            }
+                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_E076ABB911B14E41A5777E157E63463B"
+                                            {
+                                            "Name" = "8:SoftwareUniqueIdentifier"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "ValueTypes" = "3:1"
+                                            "Value" = "8:"
                                             }
                                             "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_EA4666FC07B54CD9BA81510235A16F40"
                                             {
@@ -2213,7 +2237,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_BA4F078962324107BDA4EBC8013468EA"
             {
-            "SourcePath" = "8:..\\OutlookPopup\\obj\\Release\\OutlookPopup.dll"
+            "SourcePath" = "8:..\\OutlookPopup\\obj\\Debug\\OutlookPopup.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_202D0AB0E3374EEE81494B798B33BF4B"

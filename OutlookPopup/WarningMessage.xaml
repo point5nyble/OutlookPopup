@@ -48,7 +48,10 @@
                 <Run Text="This email will be sent to an external party." />
                 <LineBreak />
                 <LineBreak />
-                <Run Text="Please validate the intended recipient(s) to ensure this email complies with Section 133(1) of Financial Services Act 2013 and Section 9(1) of Personal Data Protection Act 2010." />
+                <!--<Run Text="Please validate the intended recipient(s) to ensure this email 
+                     complies with Section 133(1) of Financial Services Act 2013 and Section 
+                     9(1) of Personal Data Protection Act 2010." />-->
+                <Run Text="{Binding ExternalRecpMessageBody }"/>
 
                 <LineBreak />
                 <LineBreak />

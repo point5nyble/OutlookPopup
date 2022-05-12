@@ -60,10 +60,12 @@ namespace OutlookPopup
                             AcceptedDomains = key.GetValue("AcceptedDomainList").ToString();
                             //EndpointURL = key.GetValue("EndpointURL").ToString();
                             LicenseId = key.GetValue("SoftwareUniqueIdentifier").ToString();
+                            ExpiredLicenseMessage = key.GetValue("ExpiredLicenseMessageBody").ToString();
+                            ExpiredLicensePopupHeader = key.GetValue("ExpiredLicensePopupHeader").ToString();
                         }
                         else
-                        {                           
-                            log.Info("Registry Values not found, Software\\Zepto\\OutlookMailPromp");
+                        {
+                            log.Info("Registry Values not found, Software\\Zepto\\OutlookMailPrompt");
                             //createRegistryKeys();
                         }
                    
@@ -78,12 +80,14 @@ namespace OutlookPopup
              }
    
         }
+        public string ExpiredLicensePopupHeader { get; set; }
         public  int AttachmentPromptEnabled { get; set; }
         public  int ExternalRecpPromptEnabled { get; set; }
         public  string AttachmentMessageTitle { get; set; }
         public  string AttachmentMessageBody { get; set; }
         public  string ExternalRecpMessageTitle { get; set; }
 
+        public string ExpiredLicenseMessage { get; set; }
         public   string ExternalRecpMessageBody { get; set; }
 
         public  string SendButttonText { get; set; }
